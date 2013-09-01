@@ -57,6 +57,9 @@ module.exports = function(grunt) {
     },
     couchapp: {
       app: config.couchapp
+    },
+    upload: {
+      app: config.couchapp
     }
   });
 
@@ -67,15 +70,24 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-jade');
   grunt.loadNpmTasks('grunt-couchapp');
+  grunt.loadTasks('./tasks');
 
-  // Default task(s).
-  grunt.registerTask('default', [
+  // Custom Tasks
+  grunt.registerTask('build', [
     'jshint'
   , 'concat'
   , 'uglify'
   , 'cssmin'
-  , 'jade'
-  , 'couchapp'
+  ]);
+
+  grunt.registerTask('sync', [
+    'couchapp',
+    'upload'
+  ]);
+
+  grunt.registerTask('default', [
+    'build',
+    'sync'
   ]);
 
 };

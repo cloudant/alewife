@@ -7,9 +7,8 @@ var nano = require('nano'),
     fs = require('fs');
 
 function Uploader(opts){
-  var conn = nano(opts.url),
-      db = conn.use(opts.db),
-      docs_dir = __dirname + '/md';
+  var db = nano(opts.db),
+      docs_dir = process.cwd() + '/md';
 
   var getLocalDocs = function(cb){
     var files = [];
@@ -39,11 +38,13 @@ function Uploader(opts){
   };
 
   var getConflicts = function(docs){
-    return docs.filter(function(doc){
+    var result = docs.filter(function(doc){
       return doc.error;
     }).map(function(doc){
       return doc.id;
     });
+
+    return result;
   };
 
   var updateRevs = function(docs, conflicts, cb){
@@ -78,7 +79,7 @@ function Uploader(opts){
           updateRevs(files, conflicts, function(err, docs){
             putRemoteDocs(docs, function(err, res){
               if(err) throw new Error(err);
-              console.log("Updated "+res.rows.length+" documents.");
+              console.log("Updated "+res.length+" documents.");
               cb();
             });
           });
@@ -92,14 +93,11 @@ function Uploader(opts){
   return main;
 }
 
-module.exports = function(grunt, config){
-  var upload = Uploader(config),
-      done = this.async();
+module.exports = function(grunt){
+  grunt.registerMultiTask('upload', 'Push local docs to remote.', function(){
+    var upload = Uploader(this.data),
+        done = this.async();
 
-  upload(done);
+    upload(done);
+  });
 }
-
-Uploader({
-  url: "http://localhost:5984",
-  db: "docs"
-})();
