@@ -15,11 +15,9 @@
           </li>
           <li ng-repeat="key in tree.keys()">
             <a href="/{{ tree.get(key).id }}">{{ tree.get(key).value.title }}</a>
-            <ul ng-show="tree.is_dir(key)" ng-init="subtree = tree.retree(key)">
-              <li ng-repeat="key in subtree.keys()">
-                <a href="/{{ subtree.get(key).id }}">{{ subtree.get(key).value.title }}</a>
-              </li>
-            </ul>
+            <div ng-show="tree.is_dir(key)">
+              <ng-include src="'/t/page-tree.html'" onload="subtree = tree.retree(key)"></ng-include>
+            </div>
           </li>
         </ul>
       </nav>

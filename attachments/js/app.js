@@ -19961,6 +19961,20 @@ if (typeof define === 'function' && define.amd) {
   };
   return makePages;
 })
+.controller("TreeController", ['$scope', function($scope) {
+    $scope.delete = function(data) {
+        data.nodes = [];
+    };
+    $scope.add = function(data) {
+        var post = data.nodes.length + 1;
+        var newName = data.name + '-' + post;
+        data.nodes.push({name: newName,nodes: []});
+    };
+    $scope.hasNodes = function(data) {
+        return (data.nodes.length > 0);
+    };
+    $scope.derp = [{name: "Node", nodes: []}];
+}])
 .controller('ContentCtrl', ['$scope', 'getPages', 'pagesTree', function($scope, getPages, pagesTree){
   getPages.success(function(data){
     $scope.pages = data;
