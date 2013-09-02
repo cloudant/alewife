@@ -21,6 +21,7 @@ module.exports = function(grunt) {
         // the files to concatenate, in order
         src: [
           'src/js/bower_components/angular/angular.js',
+          'src/js/bower_components/angular-sanitize/angular-sanitize.js',
           'src/js/bower_components/showdown/src/showdown.js',
           'src/js/app.js'
         ],

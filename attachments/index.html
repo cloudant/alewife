@@ -1,1 +1,37 @@
-<!DOCTYPE html><html><head lang="en"><title>Cloudant Documentation</title><meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta name="description" content="Documentation for the Cloudant NoSQL DBaaS"><meta name="keywords" content="nosql, dbaas, cloudant, documentation, docs"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;"><link rel="stylesheet" href="css/style.css" type="text/css"></head><body ng-app="app"><header><h1></h1></header><ul ng-controller="TocCtrl"><li ng-repeat="page in pages" ng-bind="page.path"></li></ul><div ng-controller="PageCtrl" class="container"><div class="row"><div ng-bind="page.text | markdown" class="col-md-12"></div></div></div><footer></footer><script type="text/javascript" src="js/app.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>docs.cloudant.com</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body ng-app="app">
+  <div ng-controller="ContentCtrl" class="col-md-12">
+    <div class="row">
+      <nav ng-controller="NavCtrl" class="col-md-4">
+        <ul class="nav nav-pills nav-stacked">
+          <li ng-repeat="key in tree.keys()">
+            <a href="/{{ key }}">{{ tree.get(key).value.title }}</a>
+            <ul ng-show="tree.is_dir(key)">
+              <li ng-repeat="key in subtree.keys()" ng-init="subtree = tree.retree(key)">
+                <a href="/{{ key }}">{{ subtree.get(key).value.title }}</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <div ng-controller="CurrentCtrl" class="col-md-8">
+        <div class="row" ng-repeat="page in pages">
+          <div>
+            <div class="jumbotron">
+              <h1 ng-bind="page.title"></h1>
+              <markdown ng-bind="page.text"></markdown>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="/js/app.js"></script>
+</body>
+</html>

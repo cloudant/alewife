@@ -1,2 +1,4 @@
 node_modules/
+rst/
+bower_components/
 config.json
