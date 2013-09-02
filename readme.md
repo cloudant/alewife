@@ -48,6 +48,10 @@ Here's where different kinds of content live:
         authentication
         authorization
         replication
+      migrating from other databases
+        SQL
+        MongoDB
+        CouchDB
     examples & cookbooks
       transactions
       relationships
@@ -55,7 +59,7 @@ Here's where different kinds of content live:
     theory & concepts
       the cap theorem
       mapreduce
-      document versioning
+      mvcc
 
 ## Contributing
 
@@ -65,6 +69,5 @@ Want to get involved? Yay! Just follow your nose, and these steps:
 2. Make a feature branch, like `fixed-typo`.
 3. Make changes in that branch.
 4. Make a Pull Request to merge your changes back into our master branch.
-
 
 You're done! Thanks for contributing :D

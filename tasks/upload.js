@@ -8,7 +8,7 @@ var nano = require('nano'),
 
 function Uploader(opts){
   var db = nano(opts.db),
-      docs_dir = process.cwd() + '/md';
+      docs_dir = process.cwd() + '/content';
 
   var getLocalDocs = function(cb){
     var files = [];

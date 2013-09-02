@@ -8,7 +8,7 @@ ddoc = {
     views: {
       format: {
         map: function(doc){
-          if(doc.text && !doc.deleted && doc._id.indexOf('api/inc') === -1){
+          if(doc.text && !doc.deleted){
             var title_pattern = /^(?:# )?(.+)\n/
               , title = doc.text.match(title_pattern);
             emit(doc._id, {
@@ -42,7 +42,7 @@ ddoc = {
     indexes: {
       text: {
         index: function(doc){
-          if(doc.text && !doc.deleted && doc._id.indexOf('api/inc') === -1){
+          if(doc.text && !doc.deleted){
             index("default", doc.text);
           }
         }

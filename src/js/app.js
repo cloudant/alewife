@@ -88,17 +88,6 @@ angular.module('app', ['ngSanitize'])
 }])
 .filter('markdown', ['md', function(md){
   return function(input){
-    console.log(md, input);
     if(input) return md.makeHtml(input);
   };
 }]);
-// .directive('markdown', ['md', function (md) {
-//   return {
-//     restrict: 'E',
-//     replace: true,
-//     link: function (scope, element, attrs) {
-//       var html = md.makeHtml(element.text());
-//       element.html(html);
-//     }
-//   };
-// }]);
