@@ -4,23 +4,28 @@ Cloudant's public documentation, which lives at [docs.cloudant.com](http://docs.
 
 ## Install
 
-1. To host the docs yourself, you'll need to install these:
+To host the docs yourself...
 
-* [node.js](http://nodejs.org/): download and install manually.
-* [grunt](http://gruntjs.com/): `npm install -g grunt-cli`
+1. Install node.js from [this website](http://nodejs.org/).
+2. Install [grunt](http://gruntjs.com/): `npm install -g grunt-cli`
+3. Get the repo:
 
-2. Get the repo:
+```
+git clone git://github.com/cloudant-labs/docs.git
+cd docs
+```
 
-    git clone git://github.com/cloudant-labs/docs.git
-    cd docs
+4. Install dependencies using node.js' package manager, [npm](https://npmjs.org/):
 
-3. Install dependencies using node.js' package manager, [npm](https://npmjs.org/):
+```
+npm install
+```
 
-    npm install
+5. Use grunt to build assets and push the app wherever `config.json` says:
 
-4. Use grunt to build assets and push the app wherever `config.json` says:
-
-    grunt
+```
+grunt
+```
 
 Now your app is live! By default, the app is pushed to a local CouchDB instance running at `localhost:5984` and using the `docs` database, but that can be modified in `config.json`.
 
