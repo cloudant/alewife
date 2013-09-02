@@ -8,25 +8,25 @@
 <body ng-app="app">
   <div ng-controller="ContentCtrl" class="col-md-12">
     <div class="row">
-      <nav ng-controller="NavCtrl" class="col-md-4">
-        <ul class="nav nav-pills nav-stacked">
+      <nav ng-controller="NavCtrl" class="col-md-3">
+        <ul class="nav">
+          <li>
+            <a href="/{{ tree.get().id }}">{{ tree.get().value.title }}</a>
+          </li>
           <li ng-repeat="key in tree.keys()">
-            <a href="/{{ key }}">{{ tree.get(key).value.title }}</a>
-            <ul ng-show="tree.is_dir(key)">
-              <li ng-repeat="key in subtree.keys()" ng-init="subtree = tree.retree(key)">
-                <a href="/{{ key }}">{{ subtree.get(key).value.title }}</a>
+            <a href="/{{ tree.get(key).id }}">{{ tree.get(key).value.title }}</a>
+            <ul ng-show="tree.is_dir(key)" ng-init="subtree = tree.retree(key)">
+              <li ng-repeat="key in subtree.keys()">
+                <a href="/{{ subtree.get(key).id }}">{{ subtree.get(key).value.title }}</a>
               </li>
             </ul>
           </li>
         </ul>
       </nav>
-      <div ng-controller="CurrentCtrl" class="col-md-8">
-        <div class="row" ng-repeat="page in pages">
-          <div>
-            <div class="jumbotron">
-              <h1 ng-bind="page.title"></h1>
-              <markdown ng-bind="page.text"></markdown>
-            </div>
+      <div ng-controller="CurrentCtrl" class="col-md-9">
+        <div class="row">
+          <div class="jumbotron">
+            <div ng-bind-html="current.value.text | markdown"></div>
           </div>
         </div>
       </div>

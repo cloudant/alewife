@@ -1,0 +1,7 @@
+<a href="/{{ key }}">{{ tree.get(key).value.title }}</a>
+<ul ng-show="tree.is_dir(key)">
+  <li ng-repeat="key in tree.keys()" ng-init="tree = tree.retree(key)">
+    <a href="/{{ key }}">{{ tree.get(key).value.title }}</a>
+    <ul ng-show="tree.is_dir(key)" ng-include="t/page-tree.html"></ul>
+  </li>
+</ul>

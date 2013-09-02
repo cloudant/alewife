@@ -39,6 +39,15 @@ ddoc = {
       }
     },
     shows: {},
+    indexes: {
+      text: {
+        index: function(doc){
+          if(doc.text && !doc.deleted && doc._id.indexOf('api/inc') === -1){
+            index("default", doc.text);
+          }
+        }
+      }
+    }
 }
 
 couchapp.loadAttachments(ddoc, path.join(__dirname, 'attachments'));
