@@ -6,56 +6,97 @@ Cloudant. These are database level rather than document level requests.
 
 A list of the available methods and URL paths are provided below:
 
-  ------------------------------------------------------------------------
-  Meth Path      Description
-  od             
-  ---- --------- ---------------------------------------------------------
-  GET  /\_all\_d Returns a list of all databases
-       bs        
-
-  GET  /db       Returns database information
-
-  PUT  /db       Create a new database
-
-  DELE /db       Delete an existing database
-  TE             
-
-  GET  /db/\_all Returns a built-in view of all documents in this database
-       \_docs    
-
-  POST /db/\_all Returns certain rows from the built-in view of all
-       \_docs    documents
-
-  POST /db/\_bul Insert multiple documents in to the database in a single
-       k\_docs   request
-
-  GET  /db/\_cha Returns changes for the given database
-       nges      
-
-  POST /db/\_mis Given a list of document revisions, returns the document
-       sing\_rev revisions that do not exist in the database
-       s         
-
-  POST /db/\_rev Given a list of document revisions, returns differences
-       s\_diff   between the given revisions and ones that are in the
-                 database
-
-  GET  /db/\_rev Gets the limit of historical revisions to store for a
-       s\_limit  single document in the database
-
-  PUT  /db/\_rev Sets the limit of historical revisions to store for a
-       s\_limit  single document in the database
-
-  GET  /db/\_sec Returns the special security object for the database
-       urity     
-
-  PUT  /db/\_sec Sets the special security object for the database
-       urity     
-
-  POST /db/\_vie Removes view files that are not used by any design
-       w\_cleanu document
-       p         
-  ------------------------------------------------------------------------
+<table border="1" class="docutils">
+  <colgroup>
+    <col width="5%">
+    <col width="13%">
+    <col width="82%">
+  </colgroup>
+  <thead valign="bottom">
+    <tr class="row-odd">
+      <th class="head">Method</th>
+      <th class="head">Path</th>
+      <th class="head">Description</th>
+    </tr>
+  </thead>
+  <tbody valign="top">
+    <tr class="row-even">
+      <td>GET</td>
+      <td>/_all_dbs</td>
+      <td>Returns a list of all databases</td>
+    </tr>
+    <tr class="row-odd">
+      <td>GET</td>
+      <td>/db</td>
+      <td>Returns database information</td>
+    </tr>
+    <tr class="row-even">
+      <td>PUT</td>
+      <td>/db</td>
+      <td>Create a new database</td>
+    </tr>
+    <tr class="row-odd">
+      <td>DELETE</td>
+      <td>/db</td>
+      <td>Delete an existing database</td>
+    </tr>
+    <tr class="row-even">
+      <td>GET</td>
+      <td>/db/_all_docs</td>
+      <td>Returns a built-in view of all documents in this database</td>
+    </tr>
+    <tr class="row-odd">
+      <td>POST</td>
+      <td>/db/_all_docs</td>
+      <td>Returns certain rows from the built-in view of all documents</td>
+    </tr>
+    <tr class="row-even">
+      <td>POST</td>
+      <td>/db/_bulk_docs</td>
+      <td>Insert multiple documents in to the database in a single request</td>
+    </tr>
+    <tr class="row-odd">
+      <td>GET</td>
+      <td>/db/_changes</td>
+      <td>Returns changes for the given database</td>
+    </tr>
+    <tr class="row-even">
+      <td>POST</td>
+      <td>/db/_missing_revs</td>
+      <td>Given a list of document revisions, returns the document revisions that do not exist in the database</td>
+    </tr>
+    <tr class="row-odd">
+      <td>POST</td>
+      <td>/db/_revs_diff</td>
+      <td>Given a list of document revisions, returns differences between the given revisions and ones that are in the database</td>
+    </tr>
+    <tr class="row-even">
+      <td>GET</td>
+      <td>/db/_revs_limit</td>
+      <td>Gets the limit of historical revisions to store for a single document in the database</td>
+    </tr>
+    <tr class="row-odd">
+      <td>PUT</td>
+      <td>/db/_revs_limit</td>
+      <td>Sets the limit of historical revisions to store for a single document in the database</td>
+    </tr>
+    <tr class="row-even">
+      <td>GET</td>
+      <td>/db/_security</td>
+      <td>Returns the special security object for the database</td>
+    </tr>
+    <tr class="row-odd">
+      <td>PUT</td>
+      <td>/db/_security</td>
+      <td>Sets the special security object for the database</td>
+    </tr>
+    <tr class="row-even">
+      <td>POST</td>
+      <td>/db/_view_cleanup</td>
+      <td>Removes view files that are not used by any design document</td>
+    </tr>
+  </tbody>
+</table>
 
 Retrieving a list of all databases
 ----------------------------------
@@ -67,28 +108,39 @@ Retrieving a list of all databases
 
 ### Return Codes
 
-  Code    Description
-  ------- --------------------------------
-  200     Request completed successfully
+<table border="1" class="docutils">
+  <colgroup>
+    <col width="16%">
+    <col width="84%">
+  </colgroup>
+  <thead valign="bottom">
+    <tr class="row-odd">
+      <th class="head">Code</th>
+      <th class="head">Description</th>
+    </tr>
+  </thead>
+  <tbody valign="top">
+    <tr class="row-even">
+      <td>200</td>
+      <td>Request completed successfully</td>
+    </tr>
+  </tbody>
+</table>
 
 Returns a list of all the databases. For example:
 
-~~~~ {.sourceCode .http}
-GET http://username.cloudant.com/_all_dbs
-Accept: application/json
-~~~~
+    GET http://username.cloudant.com/_all_dbs
+    Accept: application/json
 
 The return is a JSON array:
 
-~~~~ {.sourceCode .javascript}
-[
-   "_users",
-   "contacts",
-   "docs",
-   "invoices",
-   "locations"
-]
-~~~~
+    [
+       "_users",
+       "contacts",
+       "docs",
+       "invoices",
+       "locations"
+    ]
 
 Operations on entire databases
 ------------------------------
@@ -98,15 +150,11 @@ should be the database name that you wish to perform the operation on.
 For example, to obtain the meta information for the database `recipes`,
 you would use the HTTP request:
 
-~~~~ {.sourceCode .http}
-GET /recipes
-~~~~
+    GET /recipes
 
 For clarity, the form below is used in the URL paths:
 
-~~~~ {.sourceCode .http}
-GET /db
-~~~~
+    GET /db
 
 Where `db` is the name of any database.
 

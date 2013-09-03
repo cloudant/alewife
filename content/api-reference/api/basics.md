@@ -75,12 +75,10 @@ If you use an unsupported HTTP request type with a URL that does not
 support the specified type, a 405 error will be returned, listing the
 supported HTTP methods. For example:
 
-~~~~ {.sourceCode .javascript}
-{
-    "error":"method_not_allowed",
-    "reason":"Only GET,HEAD allowed"
-}
-~~~~
+    {
+        "error":"method_not_allowed",
+        "reason":"Only GET,HEAD allowed"
+    }
 
 The Cloudant design document API and the functions when returning HTML
 (for example as part of a show or list) enable you to include custom
@@ -135,42 +133,34 @@ should be as specific as possible.
     For example, when sending a request without an explicit `Accept`
     header, or when specifying `*/*`:
 
-    ~~~~ {.sourceCode .http}
     GET /recipes HTTP/1.1
     Host: username.cloudant.com
     Accept: */*
-    ~~~~
 
     The returned headers are:
 
-    ~~~~ {.sourceCode .http}
     Server: CouchDB/1.0.2 (Erlang OTP/R14B)
     Date: Thu, 13 Jan 2011 13:39:34 GMT
     Content-Type: text/plain;charset=utf-8
     Content-Length: 227
     Cache-Control: must-revalidate
-    ~~~~
 
     Note that the returned content type is `text/plain` even though the
     information returned by the request is in JSON format.
 
     Explicitly specifying the `Accept` header:
 
-    ~~~~ {.sourceCode .http}
     GET /recipes HTTP/1.1
     Host: username.cloudant.com
     Accept: application/json
-    ~~~~
 
     The headers returned include the `application/json` content type:
 
-    ~~~~ {.sourceCode .http}
     Server: CouchDB/1.0.2 (Erlang OTP/R14B)
     Date: Thu, 13 Jan 2011 13:40:11 GMT
     Content-Type: application/json
     Content-Length: 227
     Cache-Control: must-revalidate
-    ~~~~
 
 -   `If-None-Match`
 
@@ -240,35 +230,29 @@ are:
 -   String; this should be enclosed by double-quotes and supports
     Unicode characters and backslash escaping. For example:
 
-    ~~~~ {.sourceCode .javascript}
     "A String"
-    ~~~~
 
 -   Boolean - a `true` or `false` value. You can use these strings
     directly. For example:
 
-    ~~~~ {.sourceCode .javascript}
-    { "value": true}
-    ~~~~
+    {
+        "value": true
+    }
 
 -   Array - a list of values enclosed in square brackets. For example:
 
-    ~~~~ {.sourceCode .javascript}
     ["one", "two", "three"]
-    ~~~~
 
 -   Object - a set of key/value pairs (i.e. an associative array, or
     hash). The key must be a string, but the value can be any of the
     supported JSON values. For example:
 
-    ~~~~ {.sourceCode .javascript}
     {
        "servings" : 4,
        "subtitle" : "Easy to make in advance, and then cook when ready",
        "cooktime" : 60,
        "title" : "Chicken Coriander"
     }
-    ~~~~
 
     In Cloudant databases, the JSON object is used to represent a
     variety of structures, including all documents in a database.
@@ -339,9 +323,10 @@ corresponding API call reference.
     further information, as a JSON object, if available. The structure
     will contain two keys, `error` and `reason`. For example:
 
-    ~~~~ {.sourceCode .javascript}
-    {"error":"not_found","reason":"no_db_file"}
-    ~~~~
+    {
+        "error":"not_found",
+        "reason":"no_db_file"
+    }
 
 -   `405 - Resource Not Allowed`
 
