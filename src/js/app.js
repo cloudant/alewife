@@ -1,107 +1,103 @@
-angular.module('app', ['ngSanitize'])
-.config(['$locationProvider', function($locationProvider){
-  $locationProvider
-    .html5Mode(true)
-    .hashPrefix('!');
-}])
-.constant('root', '/root')
-.value('md', new Showdown.converter())
-.factory('getPages', ['$http', function($http){
-  return $http({
-    url: '/pages',
-    method: 'GET'
-  });
-}])
-.factory('pagesTree', function(){
-  var makePages = function(pages){
-    if (pages) return {
-      get: function(path){
-        if(path){
-          if(path.match(/\.\w{2,3}$/)){
-            return pages[path];
-          }else{
-            return pages[path]['index.md'];
-          } 
-        }else{
-          return pages['index.md'];
-        }
-      },
-      keys: function(){
-        return Object.keys(pages).filter(function(key){
-          return key !== 'index.md';
-        });
-      },
-      values: function(){
-        var results = [];
-        for(var key in pages){
-          results.push(pages[key]);
-        }
-        return results;
-      },
-      is_dir: function(path){
-        return !path.match(/\.\w{2,3}$/);
-      },
-      retree: function(path){
-        return makePages(pages[path]);
-      }
-    };
-  };
-  return makePages;
-})
-.controller("TreeController", ['$scope', function($scope) {
-    $scope.delete = function(data) {
-        data.nodes = [];
-    };
-    $scope.add = function(data) {
-        var post = data.nodes.length + 1;
-        var newName = data.name + '-' + post;
-        data.nodes.push({name: newName,nodes: []});
-    };
-    $scope.hasNodes = function(data) {
-        return (data.nodes.length > 0);
-    };
-    $scope.derp = [{name: "Node", nodes: []}];
-}])
-.controller('ContentCtrl', ['$scope', 'getPages', 'pagesTree', function($scope, getPages, pagesTree){
-  getPages.success(function(data){
-    $scope.pages = data;
-    $scope.tree = pagesTree(data);
-  });
-}])
-.controller('NavCtrl', ['$scope', function($scope){
+var app = {};
 
-}])
-.controller('CurrentCtrl', ['$scope', '$location', function($scope, $location){
-  function updateCurrent(){
-    if($scope.tree){
-      var parts = $location.path().split('/'),
-          parents = parts.slice(1, -1),
-          temp = $scope.tree,
-          current_page,
-          i;
-      for(i in parents){
-        if(temp.keys().indexOf(parents[i]) !== -1){
-          temp = temp.retree(parents[i]);
-        }else{
-          temp = null;
-          break;
-        }
-      }
-      if(temp){
-        current_page = temp.get(parts[parts.length-1]);
-      }else{
-        current_page = $scope.tree.get('index.md');
-      }
-      $scope.current = current_page;
-    }
+app.PagePath = '';
+app.md = new Showdown.converter();
+
+app.Page = Backbone.Model.extend({
+  idAttribute: 'key'
+});
+
+app.Pages = Backbone.Collection.extend({
+  model: app.Page,
+  url: '/pages',
+  parse: function(res){
+    var results = res.rows.map(function(row){
+      // switch `id` to `_id`
+      row._id = row.id;
+      row.value.text = app.md.makeHtml(row.value.text);
+      delete row.id;
+      return row;
+    });
+    return results;
   }
-  $scope.$watch('tree', updateCurrent);
-  $scope.$watch(function(){
-    return $location.path();
-  }, updateCurrent);
-}])
-.filter('markdown', ['md', function(md){
-  return function(input){
-    if(input) return md.makeHtml(input);
-  };
-}]);
+});
+
+app.NavItem = Backbone.View.extend({
+  tagName: 'li',
+  className: function(){
+    var _this = this;
+    var depth = this.model.id.split('/').filter(function(part){
+      return !!part;
+    }).length;
+    return 'depth-' + depth;
+  },
+  template: _.template($('#nav-item-template').html()),
+  render: function(){
+    this.$el.html(this.template(this.model.toJSON()));
+    return this;
+  }
+});
+
+app.Nav = Backbone.View.extend({
+  el: '#nav',
+  render: function(){
+    var _this = this;
+    this.collection.each(function(model){
+      var view = new app.NavItem({model: model});
+      _this.$el.append(view.render().el);
+    });
+    return this;
+  }
+});
+
+app.Current = Backbone.View.extend({
+  el: '#page',
+  template: _.template($('#current-page-template').html()),
+  render: function(path){
+    var _this = this;
+    var model = this.collection.get(path || '');
+    if(model){
+      this.$el.html(this.template(model.toJSON()));
+    }else{
+      console.error('404: ' + path);
+    }
+    return this;
+  }
+});
+
+app.Router = Backbone.Router.extend({
+  routes: {
+    '*page': 'getPage'
+  },
+  initialize: function(opts){
+    var nav = new app.Nav({
+          collection: opts.collection
+        }),
+        current = new app.Current({
+          collection: opts.collection
+        });
+
+    nav.render();
+    current.render();
+
+    this.nav = nav;
+    this.current = current;
+  },
+  getPage: function(page){
+    this.current.render(page);
+  }
+});
+
+$(function(){
+  var pages = new app.Pages({});
+
+  pages.fetch({
+    success: function(){
+      var router = new app.Router({
+        collection: pages
+      });
+  
+      Backbone.history.start({pushState: true});
+    }
+  });
+});

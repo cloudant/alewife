@@ -5,31 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
-<body ng-app="app">
-  <div ng-controller="ContentCtrl" class="col-md-12">
+<body>
+  <div class="col-md-12">
     <div class="row">
-      <nav ng-controller="NavCtrl" class="col-md-3">
-        <ul class="nav">
-          <li>
-            <a href="/{{ tree.get().id }}">{{ tree.get().value.title }}</a>
-          </li>
-          <li ng-repeat="key in tree.keys()">
-            <a href="/{{ tree.get(key).id }}">{{ tree.get(key).value.title }}</a>
-            <div ng-show="tree.is_dir(key)">
-              <ng-include src="'/t/page-tree.html'" onload="subtree = tree.retree(key)"></ng-include>
-            </div>
-          </li>
-        </ul>
+      <nav class="col-md-3">
+        <ul id="nav" class="nav"></ul>
       </nav>
-      <div ng-controller="CurrentCtrl" class="col-md-9">
+      <div class="col-md-9">
         <div class="row">
-          <div class="jumbotron">
-            <div ng-bind-html="current.value.text | markdown"></div>
-          </div>
+          <div class="jumbotron" id="page"></div>
         </div>
       </div>
     </div>
   </div>
+  <script type="text/template" id="current-page-template">
+    <%= value.text %>
+  </script>
+  <script type="text/template" id="nav-item-template">
+    <a href="/<%= key %>">
+      <%= value.title %>
+    </a>
+  </script>
   <script type="text/javascript" src="/js/app.js"></script>
 </body>
 </html>

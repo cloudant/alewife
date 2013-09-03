@@ -20,8 +20,9 @@ module.exports = function(grunt) {
       dist: {
         // the files to concatenate, in order
         src: [
-          'src/js/bower_components/angular/angular.js',
-          'src/js/bower_components/angular-sanitize/angular-sanitize.js',
+          'src/js/bower_components/jquery/jquery.js',
+          'src/js/bower_components/lodash/lodash.js',
+          'src/js/bower_components/backbone/backbone.js',
           'src/js/bower_components/showdown/src/showdown.js',
           'src/js/app.js'
         ],

@@ -8,13 +8,17 @@ ddoc = {
     views: {
       format: {
         map: function(doc){
-          if(doc.text && !doc.deleted){
+          if(doc.text && !doc.deleted && doc._id.indexOf('api/inc') === -1){
             var title_pattern = /^(?:# )?(.+)\n/
-              , title = doc.text.match(title_pattern);
-            emit(doc._id, {
-              title: title[1],
-              text: doc.text
-            });
+              , title = doc.text.match(title_pattern)
+              , id = doc._id.replace('index.md', '').replace(/\.\w{2,3}$/, '');
+            log(id);
+            if(title){
+              emit(id, {
+                title: title[1],
+                text: doc.text
+              }); 
+            }
           }
         }
       }
@@ -42,7 +46,7 @@ ddoc = {
     indexes: {
       text: {
         index: function(doc){
-          if(doc.text && !doc.deleted){
+          if(doc.text && !doc.deleted && doc._id.indexOf('api/inc') === -1){
             index("default", doc.text);
           }
         }
