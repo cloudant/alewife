@@ -65,6 +65,7 @@ Here's where different kinds of content live:
       the cap theorem
       mapreduce
       mvcc
+    API reference
 
 ## Contributing
 
