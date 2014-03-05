@@ -1,7 +1,7 @@
-// TODO rejigger this whole thing
-var config = require('./config.json');
+var config = require('./config');
+var couchapp = require('./couchapp');
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -59,20 +59,30 @@ module.exports = function(grunt) {
       }
     },
     couchapp: {
-      app: config.couchapp
+      app: {
+        app: 'couchapp',
+        db: config.deploy_to,
+        options: {
+          okay_if_exists: true
+        }
+      }
     },
     upload: {
-      app: config.couchapp
+      app: {
+        db: config.deploy_to,
+        folder: 'docs'
+      }
+    },
+    scaffold: {
+      app: {
+        folder: 'docs',
+        sitemap: config.sitemap
+      }
     }
   });
 
   // Load plugins
-  grunt.loadNpmTasks("grunt-contrib-jshint");
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
-  grunt.loadNpmTasks('grunt-jade');
-  grunt.loadNpmTasks('grunt-couchapp');
+  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
   grunt.loadTasks('./tasks');
 
   // Custom Tasks
