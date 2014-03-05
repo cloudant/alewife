@@ -15,10 +15,14 @@
     "grunt-contrib-concat": "~0.3.0",
     "grunt-couchapp": "~0.1.0",
     "grunt-contrib-cssmin": "~0.6.1",
-    "grunt-jade": "~0.4.0"
+    "grunt-jade": "~0.4.0",
+    "async": "~0.2.10"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "scaffold": "node scripts/scaffold.js",
+    "clean": "rm -r docs/*",
+    "todo": "grep -r todo docs scripts tasks assets"
   },
   "repository": {
     "type": "git",
