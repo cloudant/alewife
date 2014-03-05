@@ -1,3 +1,4 @@
+// TODO rejigger this whole thing
 var config = require('./config.json');
 
 module.exports = function(grunt) {

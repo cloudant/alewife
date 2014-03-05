@@ -1,3 +1,5 @@
+# TODO build docs
+# TODO deploy docs on success
 language: node_js
 node_js:
   - '0.8'
