@@ -1,8 +1,0 @@
-<ul>
-  <li ng-repeat="key in subtree.keys()">
-    <a href="/{{ subtree.get(key).id }}">{{ subtree.get(key).value.title }}</a>
-    <div ng-show="subtree.is_dir(key)">
-      <ng-include src="'/t/page-tree.html'"></ng-include>
-    </div>
-  </li>
-</ul>
