@@ -140,7 +140,7 @@ function Uploader(opts){
   return main;
 }
 
-module.exports = function(grunt){
+module.exports = function (grunt) {
   grunt.registerMultiTask('upload', 'Push local docs to remote.', function(){
     var upload = Uploader(this.data),
         done = this.async();

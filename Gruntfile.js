@@ -78,16 +78,27 @@ module.exports = function (grunt) {
         folder: 'docs',
         sitemap: config.sitemap
       }
+    },
+    sitemap: {
+      app: {
+        sitemap: config.sitemap
+      }
+    },
+    bower: {
+      app: {
+        // it just works :D
+      }
     }
   });
 
   // Load plugins
-  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+  require('matchdep').filterDev(['grunt-*', '!grunt-cli']).forEach(grunt.loadNpmTasks);
   grunt.loadTasks('./tasks');
 
   // Custom Tasks
   grunt.registerTask('build', [
-    'jshint'
+    'bower'
+  , 'jshint'
   , 'concat'
   , 'uglify'
   , 'cssmin'
@@ -98,7 +109,7 @@ module.exports = function (grunt) {
     'upload'
   ]);
 
-  grunt.registerTask('default', [
+  grunt.registerTask('deploy', [
     'build',
     'sync'
   ]);

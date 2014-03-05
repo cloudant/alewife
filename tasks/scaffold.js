@@ -4,6 +4,7 @@ var async = require('async');
 
 function scaffold (filepath, sitemap, done) {
   function write_title (filepath, done) {
+    var filename = path.join(filepath, 'index.md');
     async.series([
       function (done) {
         fs.mkdir(filepath, function (err) {
@@ -14,12 +15,55 @@ function scaffold (filepath, sitemap, done) {
           }
         });
       },
-      fs.writeFile.bind(fs, path.join(filepath, 'index.md'), 'TODO')
-    ], done);
+      function (done) {
+        fs.stat(filename, function (err, stat) {
+          if (!err) {
+            // file exists, skip writing
+            done(true);
+          } else if (err.code === 'ENOENT') {
+            // file doesn't exist, write it
+            done();
+          } else {
+            // some other error
+            done(err);
+          }
+        })
+      },
+      fs.writeFile.bind(fs, filename, 'TODO')
+    ], function (err) {
+      if (err && err !== true) {
+        done(err);
+      } else {
+        done();
+      }
+    });
   }
 
   function write_page (filepath, done) {
-    fs.writeFile(filepath + '.md', 'TODO', done);
+    var filename = filepath + '.md';
+    async.series([
+      function (done) {
+        fs.stat(filename, function (err, stat) {
+          if (!err) {
+            // file exists, skip writing
+            done(true);
+          } else if (err.code === 'ENOENT') {
+            // file doesn't exist, write it
+            done();
+          } else {
+            // some other error
+            done(err);
+          }
+        })
+      },
+      fs.writeFile.bind(fs, filename, 'TODO')
+    ], function (err) {
+      if (err && err !== true) {
+        done(err);
+      } else {
+        done();
+      }
+    });
   }
 
   if (sitemap[0].forEach) {
