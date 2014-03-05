@@ -10,62 +10,22 @@ To host the docs yourself...
 2. Install [grunt](http://gruntjs.com/): `npm install -g grunt-cli`
 3. Get the repo:
 
-```
-git clone git://github.com/cloudant-labs/docs.git
-cd docs
-```
+    git clone git://github.com/cloudant-labs/docs.git
+    cd docs
 
 4. Install dependencies using node.js' package manager, [npm](https://npmjs.org/):
 
-```
-npm install
-```
+    npm install
 
 5. Use grunt to build assets and push the app wherever `config.json` says:
 
-```
-grunt
-```
+    grunt deploy
 
-Now your app is live! By default, the app is pushed to a local CouchDB instance running at `localhost:5984` and using the `docs` database, but that can be modified in `config.json`.
+Now your app is live! By default, the app is pushed to a local CouchDB instance running at `http://localhost:5984` and using the `docs` database, but that can be modified in `config/index.js`.
 
 ## Contents
 
-Here's where different kinds of content live:
-
-    getting-started
-      basics
-        libraries
-        http
-        json
-      crud
-        reading
-        writing
-        updating
-        deleting
-      querying
-        secondary indexes
-        search indexes
-        list functions
-        show functions
-        chained mapreduce
-      advanced
-        authentication
-        authorization
-        replication
-      migrating from other databases
-        SQL
-        MongoDB
-        CouchDB
-    examples & cookbooks
-      transactions
-      relationships
-      couchapps
-    theory & concepts
-      the cap theorem
-      mapreduce
-      mvcc
-    API reference
+Run `npm run-script sitemap` to get a vision of how the site's laid out. For readability purposes, this task ignores entries for specific language examples.
 
 ## Contributing
 

@@ -16,11 +16,15 @@
     "grunt-couchapp": "~0.1.0",
     "grunt-contrib-cssmin": "~0.6.1",
     "grunt-jade": "~0.4.0",
-    "async": "~0.2.10"
+    "async": "~0.2.10",
+    "matchdep": "~0.3.0",
+    "grunt-cli": "~0.1.13",
+    "grunt-bower-task": "~0.3.4"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "scaffold": "node scripts/scaffold.js",
+    "test": "./node_modules/.bin/grunt deploy",
+    "scaffold": "./node_modules/.bin/grunt scaffold",
+    "sitemap": "./node_modules/.bin/grunt sitemap",
     "clean": "rm -r docs/*",
     "todo": "grep -r TODO docs scripts tasks assets"
   },
@@ -29,7 +33,7 @@
     "url": "git://github.com/cloudant/docscloudantcom.git"
   },
   "author": "cloudant",
-  "license": "BSD",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/cloudant/docscloudantcom/issues"
   }

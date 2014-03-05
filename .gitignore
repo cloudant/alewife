@@ -1,4 +1,5 @@
 node_modules/
-rst/
 bower_components/
+dist/
+lib/
 config.json
