@@ -4,36 +4,64 @@
 
 var nano = require('nano'),
     dive = require('dive'),
+    path = require('path'),
+    async = require('async'),
     fs = require('fs');
+
+function chunk (list, size) {
+  var i,
+      j,
+      temparray,
+      chunk = size,
+      results = [];
+  
+  for (i = 0, j = list.length; i < j; i += chunk) {
+      temparray = list.slice(i, i + chunk);
+      results.push(temparray);
+  }
+
+  return results;
+}
 
 function Uploader(opts){
   var db = nano(opts.db),
-      docs_dir = process.cwd() + '/docs';
+      docs_dir = path.join(process.cwd(), opts.folder);
 
-  var getLocalDocs = function(cb){
+  var getLocalDocs = function (cb) {
     var files = [];
     dive(docs_dir,
-      function(err, file){
-        if(err){
+      function (err, file) {
+        if (err) {
           console.log(err);
-        }else{
+        } else {
           files.push(file);
         }
       },
-      function(){
-        files = files.map(function(filename){
-          return {
-            _id: filename.slice(docs_dir.length + 1),
-            text: fs.readFileSync(filename).toString()
-          }
-        });
-        cb(null, files);
+      function () {
+        async.map(files, function (filename, done) {
+          async.waterfall([
+            fs.readFile.bind(fs, filename),
+            function (buffer, done) {
+              done(null, {
+                _id: filename.slice(docs_dir.length + 1),
+                text: buffer.toString()
+              });
+            }
+          ], done);
+        }, cb);
       });
   };
 
   var putRemoteDocs = function(files, cb){
-    db.bulk({docs: files}, function(err, res){
-      cb(err, res);
+    var chunked_files = chunk(files, 100);
+    async.map(chunked_files, function (files, done) {
+      db.bulk({
+        docs: files
+      }, done);
+    }, function (err, res_list) {
+      var results = [].concat.apply([], res_list);
+
+      cb(err, results);
     });
   };
 
@@ -48,45 +76,64 @@ function Uploader(opts){
   };
 
   var updateRevs = function(docs, conflicts, cb){
-    db.list({
-      keys: conflicts
-    }, function(err, res){
-      if(err) throw new Error(err);
-      revs = {};
+    async.map(chunk(conflicts, 10), function (conflicts, done) {
+      db.list({
+        keys: conflicts,
+      }, done);
+    }, function (err, res_list) {
+      if (err) {
+        cb(err);
+      } else {
+        var rows = [].concat.apply([], res_list.map(function (res) {
+          return res.rows;
+        }));
 
-      res.rows.forEach(function(row){
-        revs[row.id] = row.value.rev;
-      });
+        revs = {};
 
-      docs = docs.map(function(doc){
-        doc._rev = revs[doc._id];
-        return doc;
-      });
+        rows.forEach(function(row){
+          revs[row.id] = row.value.rev;
+        });
 
-      cb(null, docs);
+        docs = docs.filter(function (doc) {
+          return revs[doc._id];
+        }).map(function (doc) {
+          doc._rev = revs[doc._id];
+          return doc;
+        });
+
+        cb(null, docs);
+      }
     });
   };
 
-  var main = function(cb){
+  var main = function (cb) {
     cb = cb || function(){};
-    getLocalDocs(function(err, files){
-      if(err) throw new Error(err);
-      putRemoteDocs(files, function(err, res){
-        if(err) throw new Error(err);
+    var files;
+    
+    async.waterfall([
+      getLocalDocs,
+      function (_files, done) {
+        files = _files;
+        done(null, files);
+      },
+      putRemoteDocs,
+      function (res, done) {
         var conflicts = getConflicts(res);
         console.log("Uploaded "+(res.length - conflicts.length)+" documents.");
-        if(conflicts.length){
-          updateRevs(files, conflicts, function(err, docs){
-            putRemoteDocs(docs, function(err, res){
-              if(err) throw new Error(err);
-              console.log("Updated "+res.length+" documents.");
-              cb();
-            });
-          });
-        }else{
-          cb();
-        }
-      });
+        done(null, conflicts);
+      },
+      function (conflicts, done) {
+        updateRevs(files, conflicts, done);
+      },
+      putRemoteDocs
+    ], function (err, res) {
+      if (err) {
+        console.log(err);
+        cb(err);
+      } else {
+        console.log("Updated "+res.length+" documents.");
+        cb();
+      }
     });
   }
 
