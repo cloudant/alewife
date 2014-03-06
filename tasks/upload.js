@@ -128,7 +128,6 @@ function Uploader(opts){
       putRemoteDocs
     ], function (err, res) {
       if (err) {
-        console.log(err);
         cb(err);
       } else {
         console.log("Updated "+res.length+" documents.");

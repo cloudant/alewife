@@ -79,9 +79,15 @@ module.exports = function (grunt) {
         sitemap: config.sitemap
       }
     },
-    sitemap: {
+    'show-sitemap': {
       app: {
         sitemap: config.sitemap
+      }
+    },
+    sitemap: {
+      app: {
+        sitemap: config.sitemap,
+        db: config.deploy_to
       }
     },
     bower: {
@@ -106,7 +112,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask('sync', [
     'couchapp',
-    'upload'
+    'upload',
+    'sitemap'
   ]);
 
   grunt.registerTask('deploy', [

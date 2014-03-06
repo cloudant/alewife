@@ -1,25 +1,30 @@
+var nano = require('nano');
+var async = require('async');
+
 module.exports = function (grunt) {
-  function prettyprint (list, indent) {
-    indent = indent || '';
-    var step = '  ';
-    var results = [];
-    
-    list.forEach(function (elem, i) {
-      if (typeof(elem) === 'string') {
-        if (i > 0) {
-          // results.push(indent + step + elem);
+  grunt.registerMultiTask('sitemap', 'Uploads the sitemap', function () {
+    var db = nano(this.data.db);
+    var sitemap = this.data.sitemap;
+    var done = this.async();
+
+    db.head('sitemap', function (err, body, headers) {
+      var doc = {
+        sitemap: sitemap,
+        _id: 'sitemap'
+      };
+
+      if (err) {
+        if (err.status_code === 404) {
+          db.insert(doc, done);
         } else {
-          results.push(indent + elem); 
+          console.log(err);
+          throw err;
         }
       } else {
-        results = results.concat(prettyprint(elem, indent + step));
+        doc._rev = headers.etag.replace(/"/g, '');
+        
+        db.insert(doc, done);
       }
     });
-
-    return results;
-  }
-
-  grunt.registerMultiTask('sitemap', 'Prints the sitemap', function () {
-    console.log(prettyprint(this.data.sitemap).join('\n'));
   });
 };
