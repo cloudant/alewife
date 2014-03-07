@@ -1,8 +1,15 @@
-<div>
-  <div class="row" ng-repeat="id in sitemap">
-    <div class="col-md-6" ng-bind-html="docs[id].text | markdown"></div>
-    <div class="col-md-6">
-      <div ng-bind-html="docs[id + '/' + currentLang].text | markdown"></div>
+<div ng-repeat="id in sitemap" id="{{ id }}">
+  <div class="row">
+    <div class="col-md-12">
+      <header>
+        <a ng-href="#{{ id }}">
+          <h3>{{ id.slice(id.lastIndexOf('/') + 1) }}</h3>
+        </a>
+      </header>
     </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6" ng-bind-html="docs[id].text | markdown"></div>
+    <div class="col-md-6" ng-bind-html="docs[id + '/' + currentLang].text | markdown"></div>
   </div>
 </div>

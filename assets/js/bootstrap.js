@@ -1,25 +1,29 @@
 angular
 .module('bootstrap', ['services'])
 .run([
-  '$rootScope', 'sitemap', 'docs', 'languages',
-  function ($rootScope, sitemap, docs, languages) {
+  '$rootScope', '$location', '$timeout', '$anchorScroll', 'sitemap', 'docs', 'languages',
+  function ($rootScope, $location, $timeout, $anchorScroll, sitemap, docs, languages) {
     sitemap
     .flatten()
-    .success(function (ids) {
+    .then(function (ids) {
       $rootScope.sitemap = ids;
     });
 
     docs
     .get_as_obj()
-    .success(function (docs) {
+    .then(function (docs) {
       $rootScope.docs = docs;
     });
 
     languages
     .get()
-    .success(function (langs) {
+    .then(function (langs) {
       $rootScope.languages = langs;
-      $rootScope.currentLang = langs[0];
-    })
+      $rootScope.currentLang = $location.search().lang || langs[0];
+    });
+
+    $timeout(function () {
+      $anchorScroll();
+    }, 1000);
   }
 ]);

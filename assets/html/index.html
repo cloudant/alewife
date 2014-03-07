@@ -3,13 +3,36 @@
   <head>
     <title>Cloudant Docs</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="http://bootswatch.com/flatly/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="//bootswatch.com/flatly/bootstrap.min.css">
   </head>
   <body ng-app="docs.cloudant">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- TODO Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand" href="https://cloudant.com">
+            Cloudant
+          </a>
+          <a class="navbar-brand" href="#">
+            Documentation
+          </a>
+        </div>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="https://cloudant.com/sign-in/">Sign In</a>
+          </li>
+          <li>
+            <a href="https://cloudant.com/sign-up/">Sign Up</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-3">
           <div ng-include="'search.html'"></div>
+          <hr>
           <div ng-include="'nav.html'"></div>
         </div>
         <div class="col-md-9">
@@ -17,7 +40,7 @@
             <div class="col-md-6 col-md-offset-6" ng-include="'languages.html'"></div>
           </div>
           <div class="row">
-            <div class="col-md-12" ng-view></div>
+            <div class="col-md-12" ng-include="'list.html'"></div>
           </div>
         </div>
       </div>

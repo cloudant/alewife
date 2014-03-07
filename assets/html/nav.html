@@ -1,6 +1,5 @@
-<ul class="nav nav-stacked">
-  <li ng-repeat="doc in sitemap">
-    <a ng-href="#!/{{ doc }}" ng-show="$first && (typeof(doc) === 'string')">{{ doc }}</a>
-    <ul ng-hide="$first && (typeof(doc) !== 'object')" ng-include="'nav.html'" ng-init="sitemap = doc"></ul>
+<ul class="nav nav-stacked nav-pills" ng-controller="NavCtrl">
+  <li ng-repeat="doc in sitemap"> <!-- TODO scrollspy -->
+    <a ng-href="#{{ doc.id }}" scroll-to="{{ doc.id }}">{{ doc.name }}</a>
   </li>
 </ul>

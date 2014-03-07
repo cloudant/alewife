@@ -1,5 +1,5 @@
-<ul class="nav" ng-controller="LangCtrl">
-  <li ng-repeat="language in languages" ng-class="{ (currentLang === language): active }">
-    <button class="btn btn-link" ng-click="setLang(language)">{{ language }}</button>
+<ul class="nav nav-pills">
+  <li ng-repeat="language in languages" ng-class="{ active:active }" ng-controller="LangCtrl">
+    <a class="btn btn-link" ng-click="setLang(language)">{{ language }}</a>
   </li>
 </ul>
