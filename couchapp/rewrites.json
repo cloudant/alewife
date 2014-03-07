@@ -1,37 +1,13 @@
 [{
     "from": "",
-    "to": "/index.html",
-    "method": "GET",
-    "query": {}
-},{
-    "from": "/root",
-    "to": "/../../",
-    "query": {} 
-},{
-    "from": "/root/*",
-    "to": "/../../*",
-    "query": {} 
-},{
-    "from": "/tree",
-    "to": "/_list/tree/docscloudantcom/format",
-    "query": {} 
-},{
-    "from": "/pages",
-    "to": "/_view/format",
-    "query": {} 
-},{
-    "from": "/js/*",
-    "to": "/js/*",
-    "method": "GET",
-    "query": {} 
-},{
-    "from": "/css/*",
-    "to": "/css/*",
-    "method": "GET",
-    "query": {}
-},{
-    "from": "/*",
-    "to": "/index.html",
-    "method": "GET",
-    "query": {}
+    "to": "/index.html"
+}, {
+    "from": "docs/*",
+    "to": "/../../*"
+}, {
+    "from": "api/*",
+    "to": "/../../*"
+}, {
+    "from": "*",
+    "to": "/*"
 }]
