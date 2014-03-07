@@ -18,7 +18,8 @@
     "grunt-bower-task": "~0.3.4",
     "nano": "~4.1.4",
     "couchapp": "0.10.x",
-    "dive": "~0.3.0"
+    "dive": "~0.3.0",
+    "grunt-contrib-copy": "~0.5.0"
   },
   "scripts": {
     "test": "./node_modules/.bin/grunt deploy",

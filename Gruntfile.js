@@ -18,44 +18,41 @@ module.exports = function (grunt) {
         // define a string to put between each file in the concatenated output
         separator: ';'
       },
-      dist: {
+      vendor: {
         // the files to concatenate, in order
         src: [
-          'src/js/bower_components/jquery/jquery.js',
-          'src/js/bower_components/lodash/lodash.js',
-          'src/js/bower_components/backbone/backbone.js',
-          'src/js/bower_components/showdown/src/showdown.js',
-          'src/js/app.js'
+          'lib/angular/angular.js',
+          'lib/angular-*/*.js',
+          'lib/showdown/showdown.js'
         ],
         // the location of the resulting JS file
-        dest: 'attachments/js/app.js'
+        dest: 'dist/js/vendor.js'
+      },
+      app: {
+        src: [
+          'assets/js/*'
+        ],
+        dest: 'dist/js/bundle.js'
       }
     },
     uglify: {
-      options: {
-        mangle: false
-      },
       build: {
         files: {
-          'attachments/js/app.min.js': ['attachments/js/app.js']
+          'dist/js/vendor.js': ['dist/js/vendor.js'],
+          'dist/js/bundle.js': ['dist/js/bundle.js']
         }
       }
     },
-    cssmin: {
-      minify: {
-        files: {
-          'attachments/css/style.css': ['src/css/*.css']
-        }
-      }
-    },
-    jade: {
-      html: {
-        files: {
-          'attachments/': ['src/jade/*.jade']
-        },
-        options: {
-          client: false
-        }
+    copy: {
+      app: {
+        files: [
+          {
+            expand: true,
+            src: ['*.html'],
+            cwd: 'assets/html/',
+            dest: 'dist'
+          }
+        ]
       }
     },
     couchapp: {
@@ -84,6 +81,11 @@ module.exports = function (grunt) {
         sitemap: config.sitemap
       }
     },
+    'flat-sitemap': {
+      app: {
+        sitemap: config.sitemap
+      }
+    },
     sitemap: {
       app: {
         sitemap: config.sitemap,
@@ -103,11 +105,11 @@ module.exports = function (grunt) {
 
   // Custom Tasks
   grunt.registerTask('build', [
-    'bower'
-  , 'jshint'
-  , 'concat'
-  , 'uglify'
-  , 'cssmin'
+    'bower',
+    'jshint',
+    'concat',
+    // 'uglify',
+    'copy'
   ]);
 
   grunt.registerTask('sync', [

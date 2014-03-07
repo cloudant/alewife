@@ -22,4 +22,28 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('show-sitemap', 'Prints the sitemap', function () {
     console.log(prettyprint(this.data.sitemap).join('\n'));
   });
+
+  function flatten (list, parent) {
+    var results = [];
+    
+    list.forEach(function (elem, i) {
+      if (typeof(elem) === 'string') {
+        if (i === 0) {
+          parent = parent ? [parent, elem].join('/') : elem;
+          results.push(parent);
+        } else {
+          var path = parent ? [parent, elem].join('/') : elem;
+          results.push(path);
+        }
+      } else {
+        results = results.concat(flatten(elem, parent));
+      }
+    });
+
+    return results;
+  }
+
+  grunt.registerMultiTask('flat-sitemap', 'Prints the sitemap', function () {
+    console.log(flatten(this.data.sitemap).join('\n'));
+  });
 };
