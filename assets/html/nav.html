@@ -1,0 +1,6 @@
+<ul class="nav nav-stacked">
+  <li ng-repeat="doc in sitemap">
+    <a ng-href="#!/{{ doc }}" ng-show="$first && (typeof(doc) === 'string')">{{ doc }}</a>
+    <ul ng-hide="$first && (typeof(doc) !== 'object')" ng-include="'nav.html'" ng-init="sitemap = doc"></ul>
+  </li>
+</ul>

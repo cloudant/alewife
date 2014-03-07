@@ -1,0 +1,8 @@
+<div>
+  <div class="row" ng-repeat="id in sitemap">
+    <div class="col-md-6" ng-bind-html="docs[id].text | markdown"></div>
+    <div class="col-md-6">
+      <div ng-bind-html="docs[id + '/' + currentLang].text | markdown"></div>
+    </div>
+  </div>
+</div>
