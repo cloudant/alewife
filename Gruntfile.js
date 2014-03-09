@@ -14,23 +14,21 @@ module.exports = function (grunt) {
       }
     },
     concat: {
-      options: {
-        // define a string to put between each file in the concatenated output
-        separator: ';'
-      },
       vendor: {
         // the files to concatenate, in order
         src: [
           'lib/angular/angular.js',
           'lib/angular-*/*.js',
-          'lib/showdown/showdown.js'
+          'lib/showdown/showdown.js',
+          'lib/jquery/jquery.js',
+          'lib/bootstrap/bootstrap.js'
         ],
         // the location of the resulting JS file
         dest: 'dist/js/vendor.js'
       },
       app: {
         src: [
-          'assets/js/*'
+          'assets/js/*.js'
         ],
         dest: 'dist/js/bundle.js'
       }
@@ -96,6 +94,15 @@ module.exports = function (grunt) {
       app: {
         // it just works :D
       }
+    },
+    watch: {
+      app: {
+        files: ['assets/**', 'couchapp/*', 'docs/**'],
+        tasks: ['deploy'],
+        options: {
+          interrupt: true
+        }
+      }
     }
   });
 
@@ -114,6 +121,10 @@ module.exports = function (grunt) {
 
   grunt.registerTask('sync', [
     'couchapp',
+    // 'sync-docs' // enable if alewife is your authoritative docs source
+  ]);
+
+  grunt.registerTask('sync-docs', [
     'upload',
     'sitemap'
   ]);
