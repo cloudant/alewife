@@ -28,7 +28,7 @@
     "sync": "./node_modules/.bin/grunt sync",
     "scaffold": "./node_modules/.bin/grunt scaffold",
     "sitemap": "./node_modules/.bin/grunt show-sitemap",
-    "clean": "rm -r docs/*",
+    "clean": "git clean -dxf",
     "todo": "grep -r TODO docs scripts tasks assets"
   },
   "repository": {
