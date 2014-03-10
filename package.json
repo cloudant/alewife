@@ -23,14 +23,11 @@
     "grunt-contrib-watch": "~0.5.3"
   },
   "scripts": {
-    // TODO: a real test suite
     "test": "./node_modules/.bin/grunt deploy",
     "deploy": "./node_modules/.bin/grunt deploy",
-    // tasks for when alewife authoritatively controls docs
     "sync": "./node_modules/.bin/grunt sync",
     "scaffold": "./node_modules/.bin/grunt scaffold",
     "sitemap": "./node_modules/.bin/grunt show-sitemap",
-    // administrative tasks
     "clean": "rm -r docs/*",
     "todo": "grep -r TODO docs scripts tasks assets"
   },
