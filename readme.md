@@ -20,18 +20,9 @@ Why use Alewife?
 If you want to use Alewife to manage / present your docs:
 
 1. Install node.js from [this website](http://nodejs.org/).
-3. Get the repo:
-
-    git clone git://github.com/garbados/alewife.git
-    cd alewife
-
-4. Install dependencies using node.js' package manager, [npm](https://npmjs.org/):
-
-    npm install
-
-5. Deploy the docs to a CouchDB instance running at `http://localhost:5984`
-
-    npm run-script deploy
+2. Get the repo: `git clone git://github.com/garbados/alewife.git && cd alewife`
+4. Install dependencies using node.js' package manager, [npm](https://npmjs.org/): `npm install`
+5. Deploy the docs to a CouchDB instance running at `http://localhost:5984`: `npm run-script deploy`
 
 Now your app is live! By default, the app is pushed to a local CouchDB instance running at `http://localhost:5984` and using the `docs` database, but that can be modified in `config/index.js`.
 
