@@ -1,5 +1,6 @@
-# TODO build docs
 language: node_js
+services:
+  - couchdb
 node_js:
   - '0.8'
   - '0.10'
