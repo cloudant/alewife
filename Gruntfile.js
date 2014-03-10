@@ -62,6 +62,14 @@ module.exports = function (grunt) {
         }
       }
     },
+    mkcouchdb: {
+      app: {
+        db: config.deploy_to,
+        options: {
+          okay_if_exists: true
+        }
+      }
+    }
     upload: {
       app: {
         db: config.deploy_to,
@@ -120,12 +128,14 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('sync', [
+    'mkcouchdb',
     'upload',
     'sitemap'
   ]);
 
   grunt.registerTask('deploy', [
     'build',
+    'mkcouchdb',
     'couchapp'
   ]);
 
