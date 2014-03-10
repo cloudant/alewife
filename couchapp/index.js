@@ -2,7 +2,7 @@ var couchapp = require('couchapp');
 var path = require('path');
 
 var ddoc = {
-  _id: '_design/app',
+  _id: '_design/alewife',
   rewrites: require('./rewrites.json'),
   views: require('./views'),
   indexes: require('./indexes'),
