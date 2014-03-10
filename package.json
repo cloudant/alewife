@@ -1,8 +1,8 @@
 {
-  "name": "docscloudantcom",
+  "name": "alewife",
   "version": "0.0.1",
-  "description": "Documentation for Cloudant",
-  "main": "app.js",
+  "description": "Code-oriented Documentation Framework",
+  "main": "Gruntfile.js",
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -23,19 +23,24 @@
     "grunt-contrib-watch": "~0.5.3"
   },
   "scripts": {
+    // TODO: a real test suite
     "test": "./node_modules/.bin/grunt deploy",
+    "deploy": "./node_modules/.bin/grunt deploy",
+    // tasks for when alewife authoritatively controls docs
+    "sync": "./node_modules/.bin/grunt sync",
     "scaffold": "./node_modules/.bin/grunt scaffold",
     "sitemap": "./node_modules/.bin/grunt show-sitemap",
+    // administrative tasks
     "clean": "rm -r docs/*",
     "todo": "grep -r TODO docs scripts tasks assets"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/cloudant/docscloudantcom.git"
+    "url": "git://github.com/garbados/alewife.git"
   },
-  "author": "cloudant",
+  "author": "Max Thayer <garbados@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cloudant/docscloudantcom/issues"
+    "url": "https://github.com/garbados/alewife/issues"
   }
 }

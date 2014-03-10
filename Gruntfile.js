@@ -120,18 +120,13 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('sync', [
-    'couchapp',
-    // 'sync-docs' // enable if alewife is your authoritative docs source
-  ]);
-
-  grunt.registerTask('sync-docs', [
     'upload',
     'sitemap'
   ]);
 
   grunt.registerTask('deploy', [
     'build',
-    'sync'
+    'couchapp'
   ]);
 
 };
