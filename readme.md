@@ -103,3 +103,7 @@ Want to get involved? Yay! Just follow your nose, and these steps:
 You're done! Thanks for contributing :D
 
 See something you want, or want fixed? Leave an [issue](https://github.com/garbados/alewife/issues) and I'll hop to :D
+
+## License
+
+[MIT](http://opensource.org/licenses/MIT), yo.
