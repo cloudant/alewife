@@ -69,7 +69,7 @@ module.exports = function (grunt) {
           okay_if_exists: true
         }
       }
-    }
+    },
     upload: {
       app: {
         db: config.deploy_to,
