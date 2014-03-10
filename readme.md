@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/garbados/alewife.png)](https://travis-ci.org/garbados/alewife)
 
-Code-oriented documentation framework, modeled after [Stripe's API reference](https://stripe.com/docs/api) and inspired by frustrations with Sphinx :D
+Code-oriented documentation framework, modeled after [Stripe's API reference](https://stripe.com/docs/api) from your friends at [Cloudant](https://cloudant.com/) :D
 
 **Alewife is in alpha! Abandon all hope ye who enter here!**
 
