@@ -7,10 +7,9 @@ module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     jshint: {
-      files: ['src/js/app.js'],
+      files: ['assets/js/*.js'],
       options: {
         browser: true
-      , laxcomma: true
       }
     },
     concat: {
@@ -19,9 +18,7 @@ module.exports = function (grunt) {
         src: [
           'lib/angular/angular.js',
           'lib/angular-*/*.js',
-          'lib/showdown/showdown.js',
-          'lib/jquery/jquery.js',
-          'lib/bootstrap/bootstrap.js'
+          'lib/showdown/showdown.js'
         ],
         // the location of the resulting JS file
         dest: 'dist/js/vendor.js'
@@ -104,12 +101,13 @@ module.exports = function (grunt) {
       }
     },
     watch: {
-      app: {
+      build: {
         files: ['assets/**', 'couchapp/*', 'docs/**'],
-        tasks: ['deploy'],
-        options: {
-          interrupt: true
-        }
+        tasks: ['build']
+      },
+      dist: {
+        files: ['dist/**'],
+        tasks: ['couchapp']
       }
     }
   });

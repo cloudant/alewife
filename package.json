@@ -29,7 +29,7 @@
     "scaffold": "./node_modules/.bin/grunt scaffold",
     "sitemap": "./node_modules/.bin/grunt show-sitemap",
     "clean": "git clean -dxf",
-    "todo": "grep -r TODO docs scripts tasks assets"
+    "todo": "grep -r TODO docs assets"
   },
   "repository": {
     "type": "git",
