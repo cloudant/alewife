@@ -23,7 +23,7 @@
     "grunt-contrib-watch": "~0.5.3"
   },
   "scripts": {
-    "test": "./node_modules/.bin/grunt deploy && ./node_modules/.bin/grunt sync",
+    "test": "./node_modules/.bin/grunt deploy && ./node_modules/.bin/grunt scaffold && ./node_modules/.bin/grunt sync",
     "deploy": "./node_modules/.bin/grunt deploy",
     "sync": "./node_modules/.bin/grunt sync",
     "scaffold": "./node_modules/.bin/grunt scaffold",
