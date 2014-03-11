@@ -18,7 +18,7 @@ module.exports = function (grunt) {
         src: [
           'lib/angular/angular.js',
           'lib/angular-*/*.js',
-          'lib/showdown/showdown.js'
+          'lib/showdown/*.js'
         ],
         // the location of the resulting JS file
         dest: 'dist/js/vendor.js'

@@ -13,12 +13,12 @@ var Query = [
 var languages = [
   'CURL',
   'Python',
-  'Ruby',
+  // 'Ruby',
   'Node.js',
   'JavaScript',
-  'PHP',
-  'Java',
-  'Java (Android)',
+  // 'PHP',
+  // 'Java',
+  'Android',
   'Objective-C'
 ];
 
