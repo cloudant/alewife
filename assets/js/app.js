@@ -1,11 +1,10 @@
 angular
 .module('docs.cloudant', [
   // vendor dependencies
-  'ui.bootstrap',
+  'duScroll',
   // custom modules
   'services',
   'bootstrap',
   'controllers',
-  'routes',
-  'scroll'
+  'routes'
 ]);

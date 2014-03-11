@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="//bootswatch.com/flatly/bootstrap.min.css">
   </head>
-  <body ng-app="docs.cloudant">
-    <nav class="navbar navbar-default">
+  <body ng-app="docs.cloudant" style="margin-top: 70px;">
+    <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <!-- TODO Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -28,8 +28,9 @@
         </ul>
       </div>
     </nav>
-    <div class="container-fluid">
-      <div class="row">
+
+    <div class="container-fluid" style="position: absolute; width: 100%;">
+      <div class="row" style="width: 100%;">
         <div class="col-md-3">
           <div ng-include="'search.html'"></div>
           <hr>
@@ -37,8 +38,17 @@
         </div>
         <div class="col-md-9">
           <div class="row">
-            <div class="col-md-6 col-md-offset-6" ng-include="'languages.html'"></div>
+            <div class="col-md-6 col-md-offset-6">
+              <div ng-include="'languages.html'"></div>
+            </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-9 col-md-offset-3">
           <div class="row">
             <div class="col-md-12" ng-include="'list.html'"></div>
           </div>

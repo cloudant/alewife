@@ -192,4 +192,53 @@ angular
       if (input) return md.makeHtml(input);
     };
   }
+])
+.directive('onClassChange', function () {
+  return {
+    restrict: 'A',
+    link: function ($scope, $elem, $attr) {
+      $attr.$observe('class', function () {
+        if ($elem.hasClass('active')) {
+          var action = $elem.attr('on-class-change');
+          $scope.$eval(action);
+        }
+      });
+    }
+  };
+})
+.directive( 'affix', [
+  '$window', '$document', '$parse', 
+  function ( $window, $document, $parse ) {
+    return {
+      scope: { affix: '@' },
+      link: function ( scope, element, attrs ) {
+        var win = angular.element ( $window ),
+          affixed;
+                      
+        // Obviously, whenever a scroll occurs, we need to check and possibly 
+        // adjust the position of the affixed element.
+        win.bind( 'scroll', checkPosition );
+        
+        // Less obviously, when a link is clicked (in theory changing the current
+        // scroll position), we need to check and possibly adjsut the position. We,
+        // however, can't do this instantly as the page may not be in the right
+        // position yet.
+        win.bind( 'click', function () {
+          setTimeout( checkPosition, 1 );
+        });
+        
+        function checkPosition() {
+          var offset = $parse(scope.affix)(scope); 
+          var affix = win.prop('pageYOffset') <= offset ? 'top' : false;
+          
+          if (affixed === affix) return;
+            
+          affixed = affix;
+            
+          element.removeClass('affix affix-top').addClass('affix' + (affix ? '-' + affix : ''));
+        }
+      }
+    };
+  }
 ]);
+

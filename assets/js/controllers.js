@@ -3,8 +3,8 @@ angular
   'services'
 ])
 .controller('NavCtrl', [
-  '$rootScope', '$scope',
-  function ($rootScope, $scope) {
+  '$rootScope', '$scope', '$location',
+  function ($rootScope, $scope, $location) {
     var results = $rootScope.sitemap.map(function (id) {
       var sections = id.split('/');
       // TODO: actual indents, or better, sub lists
@@ -12,11 +12,55 @@ angular
       var name = indent + sections[sections.length - 1];
       return {
         id: id,
-        name: name
+        name: name,
+        indent: indent
       };
     });
 
+    $scope.$watch(function () {
+      return $location.hash();
+    }, function (hash) {
+      $scope.hash = hash;
+    });
+
+    var sitemap = results;
     $scope.sitemap = results;
+
+    $scope.$watch('hash', function (hash) {
+      function get_section (hash) {
+        return hash.slice(0, hash.lastIndexOf('/'));
+      }
+
+      $scope.sitemap = sitemap.filter(function (doc) {
+        var section = { 
+          doc: get_section(doc.id),
+          hash: get_section(hash)
+        };
+        // show all level-1 links
+        if (doc.indent.length <= 1) {
+          return true;
+        // show all parents
+        } else if (section.hash.indexOf(section.doc) !== -1) {
+          return true;
+        // show siblings
+        } else if (section.doc === section.hash) {
+          return true;
+        // show one level of children
+        } else if (section.doc === hash) {
+          return true;
+        // else, don't show
+        } else {
+          return false;
+        }
+      });
+    });
+
+    $scope.$on('active', function (_, $elem) {
+      var id = $elem.attr('href').slice(1);
+      $scope.$apply(function () {
+        $location.hash(id);
+      });
+    });
   }
 ])
 .controller('LangCtrl', [
@@ -58,13 +102,13 @@ angular
           });
 
           $rootScope.docs = results;
-        })
+        });
       } else {
         docs
         .get_as_obj()
         .then(function (docs) {
           $rootScope.docs = docs;
-        })
+        });
       }
     });
   }

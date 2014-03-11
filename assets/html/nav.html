@@ -1,5 +1,5 @@
 <ul class="nav nav-stacked nav-pills" ng-controller="NavCtrl">
-  <li ng-repeat="doc in sitemap"> <!-- TODO scrollspy -->
-    <a ng-href="#{{ doc.id }}" scroll-to="{{ doc.id }}">{{ doc.name }}</a>
+  <li ng-repeat="doc in sitemap">
+    <a href="#{{ doc.id }}" du-scrollspy du-smoothscroll offset="62">{{ doc.name }}</a>
   </li>
 </ul>

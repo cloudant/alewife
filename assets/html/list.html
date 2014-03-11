@@ -2,14 +2,14 @@
   <div class="row">
     <div class="col-md-12">
       <header>
-        <a ng-href="#{{ id }}">
-          <h3>{{ id.slice(id.lastIndexOf('/') + 1) }}</h3>
-        </a>
+        <h3>
+          <a ng-href="#{{ id }}">{{ id.slice(id.lastIndexOf('/') + 1) }}</a>
+        </h3>
       </header>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6" ng-bind-html="docs[id].text | markdown"></div>
-    <div class="col-md-6" ng-bind-html="docs[id + '/' + currentLang].text | markdown"></div>
+    <div class="col-md-6" ng-bind-html="docs[id].text | markdown" style="z-index:1000;"></div>
+    <div class="col-md-6" ng-bind-html="docs[id + '/' + currentLang].text | markdown" style="z-index:500;"></div>
   </div>
 </div>
