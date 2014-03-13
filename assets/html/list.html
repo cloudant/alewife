@@ -2,6 +2,9 @@
   <div class="row">
     <div class="col-md-12">
       <header>
+        <p ng-init="parent = id.slice(0, id.lastIndexOf('/') + 1)" ng-hide="parent === id">
+          <a href="#{{ parent }}">{{ parent }}</a>
+        </p>
         <h3>
           <a ng-href="#{{ id }}">{{ id.slice(id.lastIndexOf('/') + 1) }}</a>
         </h3>
@@ -9,7 +12,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6" ng-bind-html="docs[id].text | markdown" style="z-index:1000;"></div>
-    <div class="col-md-6" ng-bind-html="docs[id + '/' + currentLang].text | markdown" style="z-index:500;"></div>
+    <div class="col-md-6" ng-bind-html="docs[id].text | markdown"></div>
+    <div class="col-md-6" ng-bind-html="docs[id + '/' + currentLang].text | markdown"></div>
   </div>
 </div>

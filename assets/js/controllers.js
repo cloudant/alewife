@@ -5,10 +5,12 @@ angular
 .controller('NavCtrl', [
   '$rootScope', '$scope', '$location',
   function ($rootScope, $scope, $location) {
+    // TODO: actual indents, or better, sub lists
+    var step = '| ';
+
     var results = $rootScope.sitemap.map(function (id) {
       var sections = id.split('/');
-      // TODO: actual indents, or better, sub lists
-      var indent = Array(sections.length).join().replace(/,/g, '-');
+      var indent = Array(sections.length).join().replace(/,/g, step);
       var name = indent + sections[sections.length - 1];
       return {
         id: id,
@@ -37,7 +39,7 @@ angular
           hash: get_section(hash)
         };
         // show all level-1 links
-        if (doc.indent.length <= 1) {
+        if (doc.indent.length <= step.length) {
           return true;
         // show all parents
         } else if (section.hash.indexOf(section.doc) !== -1) {
@@ -57,9 +59,14 @@ angular
 
     $scope.$on('active', function (_, $elem) {
       var id = $elem.attr('href').slice(1);
+      $elem.parent().addClass('active');
       $scope.$apply(function () {
         $location.hash(id);
       });
+    });
+
+    $scope.$on('inactive', function (_, $elem) {
+      $elem.parent().removeClass('active');
     });
   }
 ])

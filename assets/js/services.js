@@ -193,19 +193,6 @@ angular
     };
   }
 ])
-.directive('onClassChange', function () {
-  return {
-    restrict: 'A',
-    link: function ($scope, $elem, $attr) {
-      $attr.$observe('class', function () {
-        if ($elem.hasClass('active')) {
-          var action = $elem.attr('on-class-change');
-          $scope.$eval(action);
-        }
-      });
-    }
-  };
-})
 .directive( 'affix', [
   '$window', '$document', '$parse', 
   function ( $window, $document, $parse ) {
