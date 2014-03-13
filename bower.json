@@ -24,7 +24,8 @@
     "angular": "~1.2.14",
     "showdown": "~0.3.1",
     "angular-sanitize": "~1.2.14",
-    "angular-scroll": "~0.2.6"
+    "angular-scroll": "~0.2.6",
+    "angular-route": "~1.2.14"
   },
   "exportsOverride": {
     "showdown": {
@@ -33,5 +34,8 @@
     "angular-scroll": {
       "": "angular-scroll.js"
     }
+  },
+  "resolutions": {
+    "angular": "~1.2.7"
   }
 }
