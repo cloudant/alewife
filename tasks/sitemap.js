@@ -7,12 +7,14 @@ module.exports = function (grunt) {
     var sitemap = this.data.sitemap;
     var done = this.async();
 
-    db.head('sitemap', function (err, body, headers) {
-      var doc = {
-        sitemap: sitemap,
-        _id: 'sitemap'
-      };
+    var doc = {
+      sitemap: sitemap,
+      type: 'sitemap',
+      _id: 'sitemap',
+      tags: []
+    };
 
+    db.get('sitemap', function (err, body, headers) {
       if (err) {
         if (err.status_code === 404) {
           db.insert(doc, done);
@@ -21,9 +23,11 @@ module.exports = function (grunt) {
           throw err;
         }
       } else {
-        doc._rev = headers.etag.replace(/"/g, '');
+        for (var key in doc) {
+          body[key] = doc[key];
+        }
         
-        db.insert(doc, done);
+        db.insert(body, done);
       }
     });
   });

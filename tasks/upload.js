@@ -42,9 +42,15 @@ function Uploader(opts){
           async.waterfall([
             fs.readFile.bind(fs, filename),
             function (buffer, done) {
+              var id = filename.slice(docs_dir.length + 1);
               done(null, {
-                _id: filename.slice(docs_dir.length + 1),
-                text: buffer.toString()
+                _id: id,
+                title: id.replace('.md', ''),
+                text: buffer.toString(),
+                published: true,
+                type: 'post',
+                category: 'documentation',
+                tags: id.replace('.md', '').split(path.sep)
               });
             }
           ], done);
