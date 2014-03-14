@@ -8,6 +8,15 @@ var ddoc = {
   indexes: require('./indexes'),
   lists: {},
   shows: {},
+  filters: {
+    app: function (doc) {
+      if (doc._id.indexOf('_design') === 0 ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
 };
 
 couchapp.loadAttachments(ddoc, path.join(process.cwd(), 'dist'));
