@@ -1,22 +1,9 @@
 angular
 .module('bootstrap', ['services'])
-// attach sitemap, doc, and languages to rootscope
+// languages to rootscope
 .run([
-  '$rootScope', '$location', '$timeout', '$anchorScroll', 'sitemap', 'docs', 'languages',
-  function ($rootScope, $location, $timeout, $anchorScroll, sitemap, docs, languages) {
-    sitemap
-    .flatten()
-    .then(function (ids) {
-      $rootScope.sitemap = ids;
-    });
-
-    docs
-    .get_as_obj()
-    .then(function (docs) {
-      $rootScope.docs = docs;
-      $anchorScroll();
-    });
-
+  '$rootScope', '$location', 'languages',
+  function ($rootScope, $location, languages) {
     languages
     .get()
     .then(function (langs) {
