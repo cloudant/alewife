@@ -14,12 +14,12 @@ var languages = [
   'CURL',
   'Python',
   // 'Ruby',
-  'Node.js',
+  // 'Node.js',
   'JavaScript',
   // 'PHP',
   // 'Java',
-  'Android',
-  'Objective-C'
+  // 'Android',
+  // 'Objective-C'
 ];
 
 function add_languages (list) {
