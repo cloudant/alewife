@@ -129,12 +129,13 @@ angular
     .get_as_obj()
     .then(function (docs) {
       $scope.docs = docs;
-    });
 
-    if ($location.path()) {
-      var id = $location.path();
-      console.log(id);
-      scroller.scrollToElement(id);
-    }
+      // scrollto doc, if it's named
+      var id = $location.path().slice(1);
+      if (id) {
+        console.log(id);
+        scroller.scrollToElement(id);
+      }
+    });
   }
 ]);

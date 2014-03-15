@@ -1,12 +1,12 @@
-<div ng-repeat="id in sitemap" id="{{ id }}">
+<div ng-repeat="id in sitemap" id="{{ id | urlize }}">
   <div class="row">
     <div class="col-md-12">
       <header>
         <p ng-init="parent = id.slice(0, id.lastIndexOf('/') + 1)" ng-hide="parent === id">
-          <a href="#{{ parent }}">{{ parent }}</a>
+          <a ng-href="#/{{ parent | urlize }}">{{ parent }}</a>
         </p>
         <h3>
-          <a ng-href="#{{ id }}">{{ id.slice(id.lastIndexOf('/') + 1) }}</a>
+          <a ng-href="#/{{ id | urlize }}">{{ id.slice(id.lastIndexOf('/') + 1) }}</a>
         </h3>
       </header>
     </div>

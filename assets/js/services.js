@@ -1,7 +1,7 @@
 angular
 .module('services', ['ngSanitize'])
 .value('query_root', '_rewrite')
-.value('docs_root', '../..')
+.value('docs_root', '_rewrite/docs')
 .factory('sitemap', [
   '$http', '$q', 'docs_root',
   function ($http, $q, docs_root) {
@@ -190,6 +190,13 @@ angular
   function (md) {
     return function (input){
       if (input) return md.makeHtml(input);
+    };
+  }
+])
+.filter('urlize', [
+  function () {
+    return function (input){
+      if (input) return input.replace(/\s/g, '+');
     };
   }
 ])
