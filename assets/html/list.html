@@ -1,25 +1,25 @@
 <div ng-repeat="id in sitemap" id="{{ id | urlize }}" style="padding-top:70px;">
   <div class="row">
     <div class="col-md-12">
-      <header>
+      <header ng-init="name = id.slice(id.lastIndexOf('/') + 1)">
         <p ng-init="parent = id.slice(0, id.lastIndexOf('/') + 1)" ng-hide="parent === id">
           <a ng-href="#/{{ parent | urlize }}">{{ parent }}</a>
         </p>
         <div ng-switch="depth" ng-init="depth = id.split('/').length">
           <h2 ng-switch-when="1">
-            <a ng-href="#/#{{ id | urlize }}">{{ id.slice(id.lastIndexOf('/') + 1) }}</a>
+            <a ng-href="#/#{{ id | urlize }}">{{ name }}</a>
           </h2>
           <h3 ng-switch-when="2">
-            <a ng-href="#/#{{ id | urlize }}">{{ id.slice(id.lastIndexOf('/') + 1) }}</a>
+            <a ng-href="#/#{{ id | urlize }}">{{ name }}</a>
           </h3>
           <h4 ng-switch-when="3">
-            <a ng-href="#/#{{ id | urlize }}">{{ id.slice(id.lastIndexOf('/') + 1) }}</a>
+            <a ng-href="#/#{{ id | urlize }}">{{ name }}</a>
           </h4>
           <h5 ng-switch-when="4">
-            <a ng-href="#/#{{ id | urlize }}">{{ id.slice(id.lastIndexOf('/') + 1) }}</a>
+            <a ng-href="#/#{{ id | urlize }}">{{ name }}</a>
           </h5>
           <h6 ng-switch-default>
-            <a ng-href="#/#{{ id | urlize }}">{{ id.slice(id.lastIndexOf('/') + 1) }}</a>
+            <a ng-href="#/#{{ id | urlize }}">{{ name }}</a>
           </h6>
         </div>
       </header>
