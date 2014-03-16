@@ -46,7 +46,7 @@ module.exports = function (grunt) {
       build: {
         files: {
           'dist/js/vendor.js': ['dist/js/vendor.js'],
-          // 'dist/js/bundle.js': ['dist/js/bundle.js']
+          'dist/js/bundle.js': ['dist/js/bundle.js']
         }
       }
     },
