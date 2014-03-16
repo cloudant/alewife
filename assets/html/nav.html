@@ -1,5 +1,1 @@
-<div class="row" ng-repeat="doc in sitemap" ng-controller="NavCtrl">
-  <div class="col-md-{{ 12 - doc.depth }} col-md-offset-(( doc.depth }}">
-    <a ng-href="#/{{ doc.id | urlize }}" du-scrollspy du-smoothscroll>{{ doc.name }}</a>
-  </div>
-</div>
+<div class="row" ng-controller="NavCtrl" id="toc"></div>

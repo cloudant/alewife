@@ -16,9 +16,15 @@ module.exports = function (grunt) {
       vendor: {
         // the files to concatenate, in order
         src: [
+          'lib/jquery/*.js',
+          'lib/jquery-*/*.js',
+          'lib/jquery.*/*.js',
+          'lib/showdown/*.js',
+          'lib/autotype/*.js',
           'lib/angular/angular.js',
           'lib/angular-*/*.js',
-          'lib/showdown/*.js'
+          'lib/bootstrap/*.js',
+          'lib/bootstrap-*/*.js'
         ],
         // the location of the resulting JS file
         dest: 'dist/js/vendor.js'
@@ -28,13 +34,19 @@ module.exports = function (grunt) {
           'assets/js/*.js'
         ],
         dest: 'dist/js/bundle.js'
+      },
+      css: {
+        src: [
+          'lib/*/*.css'
+        ],
+        dest: 'dist/css/style.css'
       }
     },
     uglify: {
       build: {
         files: {
           'dist/js/vendor.js': ['dist/js/vendor.js'],
-          'dist/js/bundle.js': ['dist/js/bundle.js']
+          // 'dist/js/bundle.js': ['dist/js/bundle.js']
         }
       }
     },
@@ -46,6 +58,11 @@ module.exports = function (grunt) {
             src: ['*.html'],
             cwd: 'assets/html/',
             dest: 'dist'
+          }, {
+            expand: true,
+            src: ['glyphicons-halflings-regular.*'],
+            cwd: 'lib/bootstrap/',
+            dest: 'dist/fonts'
           }
         ]
       }
@@ -121,7 +138,6 @@ module.exports = function (grunt) {
     'bower',
     'jshint',
     'concat',
-    // 'uglify',
     'copy'
   ]);
 
@@ -133,6 +149,13 @@ module.exports = function (grunt) {
 
   grunt.registerTask('deploy', [
     'build',
+    'mkcouchdb',
+    'couchapp'
+  ]);
+
+  grunt.registerTask('production', [
+    'build',
+    'uglify',
     'mkcouchdb',
     'couchapp'
   ]);

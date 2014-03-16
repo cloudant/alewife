@@ -3,68 +3,15 @@ angular
   'services'
 ])
 .controller('NavCtrl', [
-  '$rootScope', '$scope', '$location',
-  function ($rootScope, $scope, $location) {
-    var results = $rootScope.sitemap.map(function (id) {
-      var sections = id.split('/');
-      var depth = sections.length;
-      var name = sections[sections.length - 1];
-
-      return {
-        id: id,
-        name: name,
-        depth: depth
-      };
-    });
-
-    $scope.$watch(function () {
-      return $location.hash();
-    }, function (hash) {
-      $scope.hash = hash;
-    });
-
-    var sitemap = results;
-    $scope.sitemap = results;
-
-    $scope.$watch('hash', function (hash) {
-      function get_section (hash) {
-        return hash.slice(0, hash.lastIndexOf('/'));
+  '$scope', '$location',
+  function ($scope, $location) {
+    // update sitemap as docs changes
+    $scope.$parent.$watch('docs', function (docs) {
+      if (docs) {
+        $("#toc").tocify({
+          selectors: 'h3,h4,h5,h6'
+        }).data('toc-tocify'); 
       }
-
-      $scope.sitemap = sitemap.filter(function (doc) {
-        var section = { 
-          doc: get_section(doc.id),
-          hash: get_section(hash)
-        };
-        // show all links less than depth 2
-        if (doc.depth.length <= 2) {
-          return true;
-        // show all parents
-        } else if (section.hash.indexOf(section.doc) !== -1) {
-          return true;
-        // show siblings
-        } else if (section.doc === section.hash) {
-          return true;
-        // show one level of children
-        } else if (section.doc === hash) {
-          return true;
-        // else, don't show
-        } else {
-          return false;
-        }
-      });
-    });
-
-    $scope.$on('active', function (_, $elem) {
-      var id = $elem.attr('href').slice(1);
-      $elem.parent().addClass('active');
-      $scope.$apply(function () {
-        $location.hash(id);
-      });
-    });
-
-    $scope.$on('inactive', function (_, $elem) {
-      $elem.parent().removeClass('active');
     });
   }
 ])
@@ -85,8 +32,8 @@ angular
   }
 ])
 .controller('SearchFormCtrl', [
-  '$scope', '$location', '$rootScope', 'docs',
-  function ($scope, $location, $rootScope, docs) {
+  '$scope', '$location',
+  function ($scope, $location) {
     $scope.search = function (query) {
       var search = $location.search();
       search.q = query;
@@ -101,24 +48,17 @@ angular
     
     docs
     .search(query)
-    .then(function (docs) {
-      var results = {};
-
-      docs.forEach(function (doc) {
-        var id = doc._id.replace(/(\/index)?\.md/g, '');
-        results[id] = doc;
-      });
-
-      $scope.docs = results;
-      $scope.sitemap = docs.map(function (doc) {
+    .then(function (res) {
+      $scope.docs = docs.to_obj(res);
+      $scope.sitemap = res.map(function (doc) {
         return doc._id.replace(/(\/index)?\.md/g, '');
       });
     });
   }
 ])
 .controller('ListCtrl', [
-  '$scope', 'docs', 'sitemap', 'scroller', '$location',
-  function ($scope, docs, sitemap, scroller, $location) {
+  '$scope', 'docs', 'sitemap', '$location',
+  function ($scope, docs, sitemap, $location) {
     sitemap
     .flatten()
     .then(function (ids) {
@@ -127,15 +67,10 @@ angular
 
     docs
     .get_as_obj()
-    .then(function (docs) {
-      $scope.docs = docs;
-
-      // scrollto doc, if it's named
-      var id = $location.path().slice(1);
-      if (id) {
-        console.log(id);
-        scroller.scrollToElement(id);
-      }
+    .then(function (res) {
+      $scope.docs = res;
     });
+
+    // TODO: scrollto
   }
 ]);

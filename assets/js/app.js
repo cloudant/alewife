@@ -1,7 +1,7 @@
 angular
 .module('docs.cloudant', [
   // vendor dependencies
-  'duScroll',
+  'mgcrea.ngStrap',
   // custom modules
   'services',
   'bootstrap',

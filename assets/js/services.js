@@ -136,6 +136,17 @@ angular
       return deferred.promise;
     }
 
+    function to_obj (list) {
+      var results = {};
+
+      list.forEach(function (elem) {
+        var id = elem._id.replace(/(\/index)?\.md/g, '');
+        results[id] = elem;
+      });
+
+      return results;
+    }
+
     function get_as_obj (id) {
       // get all docs
       // expose as object
@@ -144,14 +155,7 @@ angular
 
       get(id)
       .then(function (docs) {
-        var results = {};
-
-        docs.forEach(function (doc) {
-          var id = doc._id.replace(/(\/index)?\.md/g, '');
-          results[id] = doc;
-        });
-
-        deferred.resolve(results);
+        deferred.resolve(to_obj(docs));
       });
 
       return deferred.promise;
@@ -180,6 +184,7 @@ angular
     return {
       get: get,
       get_as_obj: get_as_obj,
+      to_obj: to_obj,
       search: search
     };
   }
@@ -199,40 +204,4 @@ angular
       if (input) return input.replace(/\s/g, '+');
     };
   }
-])
-.directive( 'affix', [
-  '$window', '$document', '$parse', 
-  function ( $window, $document, $parse ) {
-    return {
-      scope: { affix: '@' },
-      link: function ( scope, element, attrs ) {
-        var win = angular.element ( $window ),
-          affixed;
-                      
-        // Obviously, whenever a scroll occurs, we need to check and possibly 
-        // adjust the position of the affixed element.
-        win.bind( 'scroll', checkPosition );
-        
-        // Less obviously, when a link is clicked (in theory changing the current
-        // scroll position), we need to check and possibly adjsut the position. We,
-        // however, can't do this instantly as the page may not be in the right
-        // position yet.
-        win.bind( 'click', function () {
-          setTimeout( checkPosition, 1 );
-        });
-        
-        function checkPosition() {
-          var offset = $parse(scope.affix)(scope); 
-          var affix = win.prop('pageYOffset') <= offset ? 'top' : false;
-          
-          if (affixed === affix) return;
-            
-          affixed = affix;
-            
-          element.removeClass('affix affix-top').addClass('affix' + (affix ? '-' + affix : ''));
-        }
-      }
-    };
-  }
 ]);
-

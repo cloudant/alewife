@@ -3,7 +3,22 @@
   <head>
     <title>Cloudant Docs</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="//bootswatch.com/flatly/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript">
+      // Chrome passes the error object (5th param) 
+      // which we must use since it now truncates the Msg (1st param).
+      window.onerror = function (errorMsg, url, lineNumber, columnNumber, errorObject) {
+          var errMsg;
+          // check the errorObject as IE and FF don't pass it through (yet)
+          if (errorObject && errorObject !== undefined) {
+                  errMsg = errorObject.message;
+              }
+              else {
+                  errMsg = errorMsg;
+              }
+          alert('Error: ' + errMsg);
+      }
+    </script>
   </head>
   <body ng-app="docs.cloudant" style="margin-top: 70px;">
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -29,32 +44,7 @@
       </div>
     </nav>
 
-    <div class="container-fluid" style="position: absolute; width: 100%;">
-      <div class="row" affix style="width: 100%;">
-        <div class="col-md-3">
-          <div ng-include="'search.html'"></div>
-          <hr>
-          <div ng-include="'nav.html'"></div>
-        </div>
-        <div class="col-md-9">
-          <div class="row">
-            <div class="col-md-6 col-md-offset-6">
-              <div ng-include="'languages.html'"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-9 col-md-offset-3">
-          <div class="row">
-            <div class="col-md-12" ng-view></div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="container-fluid" ng-view></div>
 
     <script type="text/javascript" src="js/vendor.js"></script>
     <script type="text/javascript" src="js/bundle.js"></script>

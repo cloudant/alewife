@@ -5,15 +5,15 @@ angular
   function ($routeProvider) {
     $routeProvider
     .when('/', {
-      templateUrl: 'list.html',
+      templateUrl: 'main.html',
       controller: 'ListCtrl'
     })
     .when('/search', {
-      templateUrl: 'list.html',
+      templateUrl: 'main.html',
       controller: 'SearchCtrl'
     })
     .when('/:path*', {
-      templateUrl: 'list.html',
+      templateUrl: 'main.html',
       controller: 'ListCtrl'
     })
     .otherwise({
