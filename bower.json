@@ -26,8 +26,7 @@
     "angular-sanitize": "~1.2.14",
     "angular-route": "~1.2.14",
     "angular-strap": "~2.0.0",
-    "angular-animate": "~1.2.14",
-    "jquery.tocify.js": "~1.9.0"
+    "angular-animate": "~1.2.14"
   },
   "exportsOverride": {
     "showdown": {

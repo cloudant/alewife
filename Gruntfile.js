@@ -17,8 +17,6 @@ module.exports = function (grunt) {
         // the files to concatenate, in order
         src: [
           'lib/jquery/*.js',
-          'lib/jquery-*/*.js',
-          'lib/jquery.*/*.js',
           'lib/showdown/*.js',
           'lib/autotype/*.js',
           'lib/angular/angular.js',
