@@ -3,15 +3,49 @@ angular
   'services'
 ])
 .controller('NavCtrl', [
-  '$scope', '$location',
-  function ($scope, $location) {
-    // update sitemap as docs changes
-    $scope.$parent.$watch('docs', function (docs) {
-      if (docs) {
-        $("#toc").tocify({
-          selectors: 'h3,h4,h5,h6'
-        }).data('toc-tocify'); 
-      }
+  '$scope', '$location', 'deurlizer',
+  function ($scope, $location, deurlizer) {
+    function _filter (hash, sitemap) {
+      return sitemap.map(function (doc) {
+        var active;
+        // de-urlize
+        hash = deurlizer(hash);
+        // get parent of the current hash
+        var hash_parent = hash.slice(0, hash.lastIndexOf('/') + 1);
+
+        if (doc.depth <= 2) {
+          // show all links of depth <= 2
+          active = true;
+        } else if (hash.indexOf(doc.id) !== -1) {
+          // show ancestors of the current link
+          active = true;
+        } else if (doc.parent === hash_parent) {
+          // show siblings of the current link  
+          active = true;
+        } else if (doc.parent === hash) {
+          // show immediate children of the current link
+          active = true;
+        } else {
+          // otherwise, hide it
+          active = false;
+        }
+
+        if (hash === doc.id) {
+          console.log(hash, doc.id);
+          doc.current = true;
+        } else {
+          doc.current = false;
+        }
+
+        doc.active = active;
+        return doc;
+      });
+    }
+
+    $scope.$watch(function () {
+      return $location.path().slice(1);
+    }, function (path) {
+      $scope.sitemap = _filter(path, $scope.sitemap);
     });
   }
 ])
@@ -57,12 +91,13 @@ angular
   }
 ])
 .controller('ListCtrl', [
-  '$scope', 'docs', 'sitemap', '$location',
-  function ($scope, docs, sitemap, $location) {
+  '$scope', 'docs', 'sitemap', 'smoothScrollTo',
+  function ($scope, docs, sitemap, smoothScrollTo) {
     sitemap
     .flatten()
     .then(function (ids) {
-      $scope.sitemap = ids;
+      $scope.sitemap = sitemap.format(ids);
+      smoothScrollTo(null, 1000);
     });
 
     docs
@@ -70,7 +105,5 @@ angular
     .then(function (res) {
       $scope.docs = res;
     });
-
-    // TODO: scrollto
   }
 ]);

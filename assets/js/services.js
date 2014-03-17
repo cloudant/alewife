@@ -3,12 +3,32 @@ angular
 .value('query_root', '_rewrite')
 .value('docs_root', '_rewrite/docs')
 .factory('sitemap', [
-  '$http', '$q', 'docs_root',
-  function ($http, $q, docs_root) {
+  '$http', '$q', 'docs_root', 'urlizer',
+  function ($http, $q, docs_root, urlizer) {
     var promise = $http({
       url: [docs_root, 'sitemap'].join('/'),
       method: 'GET'
     });
+
+    function format (sitemap) {
+      return sitemap.map(function (id) {
+        var doc = {
+          id: id,
+          url: urlizer(id),
+          depth: id.split('/').length
+        };
+
+        if (id.lastIndexOf('/') === -1) {
+          doc.parent = '';
+          doc.name = id;
+        } else {
+          doc.parent = id.slice(0, id.lastIndexOf('/'));
+          doc.name = id.slice(id.lastIndexOf('/') + 1);
+        }
+
+        return doc;
+      });
+    }
 
     function sitemap () {
       var deferred = $q.defer();
@@ -69,7 +89,8 @@ angular
     return {
       sitemap: sitemap,
       flatten: flatten,
-      get: get
+      get: get,
+      format: format
     };
   }
 ])
@@ -189,6 +210,25 @@ angular
     };
   }
 ])
+.factory('smoothScrollTo', [
+  '$location', '$timeout',
+  function ($location, $timeout) {
+    return function (id, delay) {
+      id = id || $location.path().slice(1);
+      delay = delay || 0;
+
+      $timeout(function () {
+        elem = document.getElementById(id);
+
+        if (elem) {
+          $('body').animate({
+            scrollTop: elem.offsetTop
+          });
+        }
+      }, delay);
+    };
+  }
+])
 .constant('md', new Showdown.converter())
 .filter('markdown', [
   'md', 
@@ -198,10 +238,19 @@ angular
     };
   }
 ])
+.factory('urlizer', function () {
+  return function (input) {
+    if (input) return input.trim().replace(/\s/g, '+').replace(/\//g, '_');
+  };
+})
+.factory('deurlizer', function () {
+  return function (input) {
+    if (input) return input.trim().replace(/\+/g, ' ').replace(/_/g, '/');
+  };
+})
 .filter('urlize', [
-  function () {
-    return function (input){
-      if (input) return input.replace(/\s/g, '+');
-    };
+  'urlizer',
+  function (urlizer) {
+    return urlizer;
   }
 ]);
