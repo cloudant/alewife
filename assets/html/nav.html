@@ -1,5 +1,5 @@
-<ul class="nav nav-stacked nav-pills" ng-controller="NavCtrl">
-  <li ng-repeat="doc in sitemap">
-    <a href="#{{ doc.id }}" du-scrollspy du-smoothscroll>{{ doc.name }}</a>
-  </li>
-</ul>
+<div class="row" ng-controller="NavCtrl">
+  <div ng-repeat="doc in sitemap" class="col-md-{{ 12 - doc.depth }} col-md-offset-{{ doc.depth }}" ng-show="doc.active">
+    <a ng-href="#/{{ doc.url }}" du-scrollspy du-smoothscroll>{{ doc.name }}</a>
+  </div>
+</div>

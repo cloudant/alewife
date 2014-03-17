@@ -34,8 +34,5 @@
     "angular-scroll": {
       "": "angular-scroll.js"
     }
-  },
-  "resolutions": {
-    "angular": "~1.2.7"
   }
 }

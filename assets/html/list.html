@@ -1,18 +1,18 @@
-<div ng-repeat="id in sitemap" id="{{ id }}">
+<div ng-repeat="doc in sitemap" id="/{{ doc.url }}">
   <div class="row">
     <div class="col-md-12">
       <header>
-        <p ng-init="parent = id.slice(0, id.lastIndexOf('/') + 1)" ng-hide="parent === id">
-          <a href="#{{ parent }}">{{ parent }}</a>
+        <p ng-show="doc.parent">
+          <a ng-href="#/{{ doc.parent }}">{{ doc.parent }}</a>
         </p>
         <h3>
-          <a ng-href="#{{ id }}">{{ id.slice(id.lastIndexOf('/') + 1) }}</a>
+          <a ng-href="#/{{ doc.url }}">{{ doc.name }}</a>
         </h3>
       </header>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6" ng-bind-html="docs[id].text | markdown"></div>
-    <div class="col-md-6" ng-bind-html="docs[id + '/' + currentLang].text | markdown"></div>
+    <div class="col-md-6" ng-bind-html="docs[doc.id].text | markdown"></div>
+    <div class="col-md-6" ng-bind-html="docs[doc.id + '/' + currentLang].text | markdown"></div>
   </div>
 </div>

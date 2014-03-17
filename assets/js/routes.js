@@ -5,16 +5,18 @@ angular
   function ($routeProvider) {
     $routeProvider
     .when('/', {
-      templateUrl: 'list.html',
-      controller: 'ListCtrl'
+      templateUrl: 'main.html',
+      controller: 'ListCtrl',
+      reloadOnSearch: false
     })
     .when('/search', {
-      templateUrl: 'list.html',
+      templateUrl: 'main.html',
       controller: 'SearchCtrl'
     })
     .when('/:path*', {
-      templateUrl: 'list.html',
-      controller: 'ListCtrl'
+      templateUrl: 'main.html',
+      controller: 'ListCtrl',
+      reloadOnSearch: false
     })
     .otherwise({
       redirectTo: '/'
@@ -24,8 +26,8 @@ angular
 .config([
   '$locationProvider',
   function ($locationProvider) {
-    $locationProvider
-      .html5Mode(true);
+    // $locationProvider
+    //   .html5Mode(true);
       // .hashPrefix('!');
   }
 ]);

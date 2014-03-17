@@ -2,13 +2,32 @@ angular
 .module('services', ['ngSanitize'])
 .value('query_root', '_rewrite')
 .value('docs_root', '../..')
-.factory('sitemap', [
-  '$http', '$q', 'docs_root',
-  function ($http, $q, docs_root) {
+.factory('$sitemap', [
+  '$http', '$q', 'docs_root', 'urlize',
+  function ($http, $q, docs_root, urlize) {
     var promise = $http({
       url: [docs_root, 'sitemap'].join('/'),
       method: 'GET'
     });
+
+    function _format (id) {
+      var doc = {
+        id: id,
+        url: urlize(id),
+        depth: id.split('/').length
+      };
+
+      if (doc.depth > 1) {
+        var i = id.lastIndexOf('/');
+        doc.name = id.slice(i + 1);
+        doc.parent = id.slice(0, i);
+      } else {
+        doc.name = id;
+        doc.parent = '';
+      }
+
+      return doc;
+    }
 
     function sitemap () {
       var deferred = $q.defer();
@@ -46,7 +65,7 @@ angular
       }
 
       promise.success(function (doc) {
-        var flat_sitemap = _flatten(doc.sitemap);
+        var flat_sitemap = _flatten(doc.sitemap).map(_format);
         deferred.resolve(flat_sitemap);
       });
 
@@ -73,7 +92,7 @@ angular
     };
   }
 ])
-.factory('languages', [
+.factory('$languages', [
   '$http', '$q', 'query_root',
   function ($http, $q, query_root) {
     var promise = $http({
@@ -104,7 +123,7 @@ angular
     };
   }
 ])
-.factory('docs', [
+.factory('$docs', [
   '$http', '$q', 'query_root',
   function ($http, $q, query_root) {
     function res_to_docs (res) {
@@ -158,7 +177,7 @@ angular
     }
 
     function search (query) {
-      // return all 
+      // return all matching docs
       var deferred = $q.defer();
 
       $http({
@@ -190,6 +209,24 @@ angular
   function (md) {
     return function (input){
       if (input) return md.makeHtml(input);
+    };
+  }
+])
+.factory('urlize', function () {
+  return function (input) {
+    if (input) return input.trim().replace(/\s/g, '+');
+  };
+})
+.factory('scroll_to', [
+  '$timeout', '$anchorScroll',
+  function ($timeout, $anchorScroll) {
+    // gives the DOM a second to render
+    // TODO ugh timeouts are you serious
+    // it is you who deserves a timeout >:(
+    return function () {
+      $timeout(function () {
+        $anchorScroll();
+      }, 1000);
     };
   }
 ])

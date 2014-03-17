@@ -4,7 +4,6 @@ angular
   'duScroll',
   // custom modules
   'services',
-  'bootstrap',
   'controllers',
   'routes'
 ]);
