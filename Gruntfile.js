@@ -20,8 +20,6 @@ module.exports = function (grunt) {
           'jquery-ui',
           'jquery.tocify.js',
           'async',
-          'underscore',
-          'backbone',
           'bootstrap',
           'showdown',
           'handlebars'
