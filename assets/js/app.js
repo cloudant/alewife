@@ -50,10 +50,13 @@ function render_templates (data, done) {
     var name = key.slice(key.lastIndexOf('/') + 1) || key;
     var result = md.makeHtml(markdown);
 
+    var elem;
     if (language === name) {
-      $('[data-content-id="' + key + '"] > [data-content-code]').html(result);      
+      elem = $('[data-content-id="' + key + '"] [data-content-code]');
+      elem.html(result);
     } else if (data.languages.indexOf(name) === -1) {
-      $('[data-content-id="' + key + '"] > [data-content-text]').html(result);
+      elem = $('[data-content-id="' + key + '"] [data-content-text]');
+      elem.html(result);
     }
   });
 
