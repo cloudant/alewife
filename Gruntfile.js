@@ -16,18 +16,27 @@ module.exports = function (grunt) {
       vendor: {
         // the files to concatenate, in order
         src: [
-          'lib/angular/angular.js',
-          'lib/angular-*/*.js',
-          'lib/showdown/*.js'
-        ],
+          'jquery',
+          'jquery-ui',
+          'jquery.tocify.js',
+          'async',
+          'underscore',
+          'backbone',
+          'bootstrap',
+          'showdown',
+          'handlebars'
+        ].map(function (folder) {
+          return 'lib/' + folder + '/*.js';
+        }),
         // the location of the resulting JS file
         dest: 'dist/js/vendor.js'
-      },
+      }
+    },
+    browserify: {
       app: {
-        src: [
-          'assets/js/*.js'
-        ],
-        dest: 'dist/js/bundle.js'
+        files: {
+          'dist/js/bundle.js': ['assets/js/app.js']
+        }
       }
     },
     uglify: {
@@ -46,6 +55,16 @@ module.exports = function (grunt) {
             src: ['*.html'],
             cwd: 'assets/html/',
             dest: 'dist'
+          }, {
+            expand: true,
+            src: ['*.css'],
+            cwd: 'lib/bootstrap/',
+            dest: 'dist/css'
+          }, {
+            expand: true,
+            src: ['glyphicons-halflings-regular.*'],
+            cwd: 'lib/bootstrap/',
+            dest: 'dist/fonts'
           }
         ]
       }
@@ -121,6 +140,7 @@ module.exports = function (grunt) {
     'bower',
     'jshint',
     'concat',
+    'browserify',
     // 'uglify',
     'copy'
   ]);
