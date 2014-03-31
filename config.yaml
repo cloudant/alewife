@@ -1,0 +1,97 @@
+languages: &languages
+  - Node.js
+  - cURL
+  - Python
+  - Ruby
+  - JavaScript
+  - PHP
+  - Java
+  - Android
+  - Objective-C
+
+methods: &methods
+  - Read: *languages
+  - Create: *languages
+  - Update: *languages
+  - Delete: *languages
+
+sitemap:
+  - The Basics:
+    - What is Cloudant?:
+    - Your Account
+    - Databases: *methods
+    - Documents: *methods
+    - Indexes:
+      - _all_docs: *languages
+      - MapReduce: *languages
+      - Lucene: *languages
+      - Geo: *languages
+  - API Reference:
+    - Account:
+      - Read: *languages
+      - _all_dbs: *languages
+      - _active_tasks: *languages
+      - _replicate: *languages
+    - Auth:
+      - Authentication: *languages
+      - Authorization: *languages
+      - "API Keys": *languages
+      - "Virtual Hosts"
+      - "CORS"
+      - "Shared Databases"
+    - Databases: 
+      - CRUD: *methods
+      - _all_docs: *languages
+      - _bulk_docs: *languages
+      - _changes: *languages
+      - _shards: *languages
+      - _missing_revs: *languages
+      - _revs_diff: *languages
+      - _revs_limit: *languages
+      - _security: *languages
+      - _view_cleanup: *languages
+    - Documents:
+      - CRUD: *methods
+      - Attachments: *methods
+    - "Design Documents":
+      - CRUD: *methods
+      - 'Search Indexes':
+        - Read: *languages
+      - 'MapReduce Indexes':
+        - Read: *languages
+      - 'Geo Indexes':
+        - Read: *languages
+      - 'List Functions':
+        - Read: *languages
+      - 'Show Function':
+        - Read: *languages
+      - 'Filter Functions':
+        - Read: *languages
+      - 'Update Handlers':
+        - Read: *languages
+      - 'Update Validators'
+      - 'DBCopy'
+    - Replication:
+      - _replicate:
+        - Create: *languages
+        - Read: *languages
+        - Delete: *languages
+      - _replicator:
+        - Create: *languages
+        - Read: *languages
+        - Delete: *languages
+    - Monitoring: *languages
+    - "Global Database Changes":
+  - Guides:
+    - "Using Cloudant With...": *languages
+    - CouchApps
+    - Backing Up Your Data
+    - ACIDity and Transactions
+    - The CAP Theorem
+    - Document Versioning and MVCC
+    - Clusters and Quorum
+    - Selecting a Cluster
+    - Switching Clusters
+    - Multi-homing Your Data
+    - Replication
+  - "Client Libraries": *languages
