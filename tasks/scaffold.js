@@ -148,18 +148,26 @@ function create_docs_title (filepath, done) {
   });
 }
 
-var argv = process.argv.slice(2);
-var scaffold = new Scaffold({
-  filepath: argv[0] || 'docs',
-  sitemap_path: argv[1] || '../config.json'
-});
-
-async.series([
-  create_docs.bind(null, scaffold.filepath),
-  create_docs_title.bind(null, scaffold.filepath)
-], function (err) {
-  if (err) throw err;
-  scaffold.write(function (err) {
-    if (err) throw err;
+function main (done) {
+  var argv = process.argv.slice(2);
+  var scaffold = new Scaffold({
+    filepath: 'docs',
+    sitemap_path: '../config.json'
   });
-})
+
+  async.series([
+    create_docs.bind(null, scaffold.filepath),
+    create_docs_title.bind(null, scaffold.filepath)
+  ], function (err) {
+    if (err) {
+      done(err);
+    } else {
+      scaffold.write(done);
+    }
+  });
+}
+
+module.exports = {
+  main: main,
+  scaffold: Scaffold
+};
