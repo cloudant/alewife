@@ -16,28 +16,25 @@ module.exports = function (grunt) {
       vendor: {
         // the files to concatenate, in order
         src: [
-          'lib/jquery/*.js',
-          'lib/showdown/*.js',
-          'lib/autotype/*.js',
-          'lib/angular/angular.js',
-          'lib/angular-*/*.js',
-          'lib/bootstrap/*.js',
-          'lib/bootstrap-*/*.js'
-        ],
+          'jquery',
+          'jquery-ui',
+          'jquery.tocify.js',
+          'async',
+          'bootstrap',
+          'showdown',
+          'handlebars'
+        ].map(function (folder) {
+          return 'lib/' + folder + '/*.js';
+        }),
         // the location of the resulting JS file
         dest: 'dist/js/vendor.js'
-      },
+      }
+    },
+    browserify: {
       app: {
-        src: [
-          'assets/js/*.js'
-        ],
-        dest: 'dist/js/bundle.js'
-      },
-      css: {
-        src: [
-          'lib/*/*.css'
-        ],
-        dest: 'dist/css/style.css'
+        files: {
+          'dist/js/bundle.js': ['assets/js/app.js']
+        }
       }
     },
     uglify: {
@@ -56,6 +53,11 @@ module.exports = function (grunt) {
             src: ['*.html'],
             cwd: 'assets/html/',
             dest: 'dist'
+          }, {
+            expand: true,
+            src: ['*.css'],
+            cwd: 'lib/bootstrap/',
+            dest: 'dist/css'
           }, {
             expand: true,
             src: ['glyphicons-halflings-regular.*'],
@@ -136,6 +138,8 @@ module.exports = function (grunt) {
     'bower',
     'jshint',
     'concat',
+    'browserify',
+    // 'uglify',
     'copy'
   ]);
 
