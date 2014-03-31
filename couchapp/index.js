@@ -24,7 +24,7 @@ var ddoc = {
       function _format (id) {
         var doc = {
           id: id,
-          hash: id.replace(/\s/g, '+').replace(/\//g, '_'),
+          hash: id.replace(/\s/g, '+').replace(/\//g, '_').toLowerCase(),
           depth: id.split('/').length
         };
 
@@ -45,21 +45,43 @@ var ddoc = {
         
         list.forEach(function (elem, i) {
           if (typeof(elem) === 'string') {
-            var path = parent ? [parent, elem].join('/') : elem;
-            if (i === 0) {
-              parent = path;
-              results.push(parent);
-            }
-          } else {
-            results = results.concat(_flatten(elem, parent));
+            // section is a string: log it
+            results.push(parent ? [parent, elem].join('/') : elem);
+          } else if (elem instanceof Array) {
+            // section is an array: recurse
+            results.concat(_flatten(elem, parent));
+          } else if (typeof(elem) === 'object') {
+            // section is an object: write titles for each key 
+            // and recuse parse_sitemap on value
+            Object.keys(elem).forEach(function (key) {
+              var _parent = parent ? [parent, key].join('/') : key;
+              results.push(_parent);
+              if (elem[key]) {
+                results = results.concat(_flatten(elem[key], _parent));
+              }
+            });
           }
         });
 
         return results;
       }
 
+      var result = _flatten(doc.sitemap)
+                    .filter(function (path) {
+                      var should_return = true;
+                      
+                      for (var i = doc.languages.length - 1; i >= 0; i--) {
+                        if (path.indexOf(doc.languages[i]) !== -1) {
+                          should_return = false;
+                          break;
+                        }
+                      }
+
+                      return should_return;
+                    })
+                    .map(_format);
       return {
-        body: JSON.stringify(_flatten(doc.sitemap).map(_format)),
+        body: JSON.stringify(result),
         headers: {
           "Content-Type": "application/json"
         }

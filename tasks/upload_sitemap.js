@@ -8,14 +8,12 @@ function upload_sitemap (config, done) {
   }
 
   this.db = nano(config.db || 'http://localhost:5984/docs');
-  this.sitemap = config.sitemap || require('../config.json').sitemap;
+  this.sitemap = config.sitemap || require('../config.json');
 
-  var doc = {
-    sitemap: sitemap,
-    type: 'sitemap',
-    _id: 'sitemap',
-    tags: []
-  };
+  var doc = this.sitemap;
+  doc.type = 'sitemap';
+  doc._id = 'sitemap';
+  doc.tags = [];
 
   db.get('sitemap', function (err, body, headers) {
     if (err) {
@@ -26,11 +24,8 @@ function upload_sitemap (config, done) {
         throw err;
       }
     } else {
-      for (var key in doc) {
-        body[key] = doc[key];
-      }
-      
-      db.insert(body, done);
+      doc._rev = body._rev;
+      db.insert(doc, done);
     }
   });
 }

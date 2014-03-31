@@ -10,7 +10,7 @@ function main (config, done) {
 
   config.db = config.db || 'http://localhost:5984/docs';
   config.folder = config.folder || 'docs';
-  config.sitemap = config.sitemap || require('../config.json').sitemap;
+  config.sitemap = config.sitemap || require('../config.json');
 
   async.parallel([
     docs.bind(null, config),

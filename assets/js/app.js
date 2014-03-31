@@ -2,7 +2,7 @@
 function load_resources (done) {
   async.map([
     '_rewrite/_show/flatten/sitemap',
-    '_rewrite/_view/languages?group=true',
+    '_rewrite/docs/sitemap',
     '_rewrite/_list/objectify/docs?include_docs=true'
   ], function (url, done) {
     $.getJSON(url, function (data) {
@@ -16,7 +16,7 @@ function load_resources (done) {
         // format sitemap
         sitemap: res[0],
         // format language
-        languages: res[1].rows.map(function (row) { return row.key; }),
+        languages: res[1].languages,
         // the list function did our work :D
         docs: res[2]
       });
