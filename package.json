@@ -14,13 +14,16 @@
   },
   "scripts": {
     "yaml": "./node_modules/.bin/js-yaml config.yaml > config.json",
-    "test": "./node_modules/.bin/grunt deploy && ./node_modules/.bin/grunt scaffold && ./node_modules/.bin/grunt sync",
-    "deploy": "./node_modules/.bin/grunt deploy",
-    "sync": "./node_modules/.bin/grunt sync",
-    "scaffold": "node tasks/scaffold.js",
-    "sitemap": "./node_modules/.bin/grunt show-sitemap",
+    "jshint": "./node_modules/.bin/jshint assets tasks",
+    "copy": "cp assets/html/*.html dist/ && cp assets/js/app.js dist/js/bundle.js",
+    "deploy": "node tasks deploy",
+    "upload": "node tasks upload",
+    "scaffold": "node tasks scaffold",
+    "sitemap": "node tasks show",
+    "sync": "npm run yaml && npm run jshint && npm run copy && npm run upload && npm run deploy",
     "clean": "git clean -dxf",
-    "todo": "grep -r TODO docs assets"
+    "todo": "grep -r TODO docs assets",
+    "test": "./node_modules/.bin/grunt deploy && ./node_modules/.bin/grunt scaffold && ./node_modules/.bin/grunt sync"
   },
   "repository": {
     "type": "git",

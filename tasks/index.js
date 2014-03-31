@@ -1,6 +1,7 @@
 var scaffold = require('./scaffold');
 var upload = require('./upload');
 var show = require('./show');
+var deploy = require('./deploy');
 
 var tasks = {
   scaffold: scaffold.main,
@@ -8,7 +9,8 @@ var tasks = {
   upload_docs: upload.docs,
   upload_sitemap: upload.sitemap,
   show: show.pprint,
-  show_flat: show.flat
+  show_flat: show.flat,
+  deploy: deploy
 };
 
 var cmd = process.argv[2];

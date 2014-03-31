@@ -12,11 +12,10 @@ function chunk (list, size) {
   var i,
       j,
       temparray,
-      chunk = size,
       results = [];
   
-  for (i = 0, j = list.length; i < j; i += chunk) {
-      temparray = list.slice(i, i + chunk);
+  for (i = 0, j = list.length; i < j; i += size) {
+      temparray = list.slice(i, i + size);
       results.push(temparray);
   }
 
@@ -140,7 +139,7 @@ function Uploader(opts){
         cb();
       }
     });
-  }
+  };
 
   return main;
 }
@@ -155,4 +154,4 @@ module.exports = function (config, done) {
   config.folder = config.folder || 'docs';
 
   Uploader(config)(done);
-}
+};
