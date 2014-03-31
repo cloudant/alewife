@@ -18,7 +18,7 @@ methods: &methods
 sitemap:
   - The Basics:
     - What is Cloudant?:
-    - Your Account
+    - Your Account: *languages
     - Databases: *methods
     - Documents: *methods
     - Indexes:
@@ -69,8 +69,8 @@ sitemap:
         - Read: *languages
       - 'Update Handlers':
         - Read: *languages
-      - 'Update Validators'
-      - 'DBCopy'
+      - 'Update Validators':
+      - 'DBCopy':
     - Replication:
       - _replicate:
         - Create: *languages

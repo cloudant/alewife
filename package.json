@@ -26,10 +26,11 @@
     "js-yaml": "~3.0.2"
   },
   "scripts": {
+    "yaml": "./node_modules/.bin/js-yaml config.yaml > config.json",
     "test": "./node_modules/.bin/grunt deploy && ./node_modules/.bin/grunt scaffold && ./node_modules/.bin/grunt sync",
     "deploy": "./node_modules/.bin/grunt deploy",
     "sync": "./node_modules/.bin/grunt sync",
-    "scaffold": "./node_modules/.bin/grunt scaffold",
+    "scaffold": "node tasks/scaffold.js",
     "sitemap": "./node_modules/.bin/grunt show-sitemap",
     "clean": "git clean -dxf",
     "todo": "grep -r TODO docs assets"
