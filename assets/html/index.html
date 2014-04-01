@@ -3,7 +3,12 @@
   <head>
     <title>Cloudant Docs</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <style type="text/css">
+      .indent { 
+        margin-left: 10px; 
+      }
+    </style>
     <script type="text/javascript">
       // Chrome passes the error object (5th param) 
       // which we must use since it now truncates the Msg (1st param).
@@ -79,8 +84,8 @@
 
     <script type="text/x-handlebars" data-template-name="sitemap">
       {{#sitemap}}
-      <h{{ depth }} data-unique="{{ hash }}" name="{{ hash }}">{{ name }}</h{{ depth }}>
-      <div class="row" data-content-id="{{ id }}">
+      <h{{ depth }} data-unique="{{ hash }}" name="{{ hash }}" data-content-id="{{ id }}">{{ name }}</h{{ depth }}>
+      <div class="row">
         <div class="col-md-6" data-content-text></div>
         <div class="col-md-6" data-content-code></div>
       </div>
@@ -93,6 +98,7 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.2/handlebars.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/async/0.6.2/async.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/bundle.js"></script>
   </body>
 </html>

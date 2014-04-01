@@ -62,13 +62,13 @@ function render_templates (data, done) {
 
   // build ToC
   var toc = $('#toc').tocify({
-    selectors: 'h2, h3, h4, h5, h6',
+    selectors: 'h1, h2, h3, h4, h5, h6',
     hashGenerator: function (text, elem) {
       return elem.attr('data-unique');
     }
   }).data("toc-tocify");
   // css in my javascript? oh down the rabbit hole we go D:
-  $('ul.tocify-header').addClass('nav nav-pills nav-stacked');
+  $('ul.tocify-header, ul.tocify-subheader').addClass('indent');
 
   done();
 }
