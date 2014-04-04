@@ -28,7 +28,7 @@ Now your app is live! By default, the app is pushed to a local CouchDB instance 
 
 ## Managing Docs Locally
 
-Alewife can scaffold documentation based on a sitemap constructed in `config/sitemap/index.js`. The default sitemap is based loosely off of [Cloudant's documentation](http://docs.cloudant.com/), but feel free to play around with it.
+Alewife can scaffold documentation based on a sitemap constructed in `config.yaml`. The default sitemap is based loosely off of [Cloudant's documentation](http://docs.cloudant.com/), but feel free to play around with it.
 
 To scaffold documentation based on the sitemap:
 
