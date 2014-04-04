@@ -67,7 +67,7 @@ module.exports = {
     done();
   },
   pprint: function (done) {
-    console.log(prettyprint());
+    console.log(prettyprint().join('\n'));
     done();
   }
 };

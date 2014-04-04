@@ -19,7 +19,7 @@
     "deploy": "node tasks deploy",
     "upload": "node tasks upload",
     "scaffold": "node tasks scaffold",
-    "sitemap": "node tasks show",
+    "sitemap": "npm run yaml && node tasks show",
     "start": "npm run yaml && npm run jshint && npm run copy && npm run deploy",
     "clean": "git clean -dxf",
     "todo": "grep -r TODO docs assets",
