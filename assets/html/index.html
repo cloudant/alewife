@@ -84,8 +84,8 @@
 
     <script type="text/x-handlebars" data-template-name="sitemap">
       {{#sitemap}}
-      <h{{ depth }} data-unique="{{ hash }}" name="{{ hash }}" data-content-id="{{ id }}">{{ name }}</h{{ depth }}>
-      <div class="row">
+      <h{{ depth }} data-unique="{{ hash }}" name="{{ hash }}">{{ name }}</h{{ depth }}>
+      <div class="row" data-content-id="{{ id }}">
         <div class="col-md-6" data-content-text></div>
         <div class="col-md-6" data-content-code></div>
       </div>

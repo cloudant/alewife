@@ -20,10 +20,10 @@
     "upload": "node tasks upload",
     "scaffold": "node tasks scaffold",
     "sitemap": "node tasks show",
-    "start": "npm run yaml && npm run jshint && npm run copy && npm run upload && npm run deploy",
+    "start": "npm run yaml && npm run jshint && npm run copy && npm run deploy",
     "clean": "git clean -dxf",
     "todo": "grep -r TODO docs assets",
-    "test": "node tasks scaffold && npm start"
+    "test": "npm run scaffold && npm run upload && npm start"
   },
   "repository": {
     "type": "git",
