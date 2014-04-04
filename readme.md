@@ -66,7 +66,7 @@ If you make more changes, just run `upload` again. **It will overwrite documents
 
 ## Managing Docs w/ Porter
 
-You'll want to use the [docs branch of Porter](https://github.com/garbados/porter/tree/docs). **Instructions coming soon**, but the docs branch works as of this writing, so if you want to, just follow along with [Porter's install instructions](https://github.com/garbados/porter/tree/docs#install).
+You'll want to use the [remote-only branch of Porter](https://github.com/garbados/porter/tree/remote-only). **Instructions coming soon**, but the docs branch works as of this writing, so if you want to, just follow along with [Porter's install instructions](https://github.com/garbados/porter/tree/docs#install).
 
 ## The App Itself
 
