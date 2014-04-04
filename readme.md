@@ -22,7 +22,7 @@ If you want to use Alewife to manage / present your docs:
 1. Install node.js from [this website](http://nodejs.org/).
 2. Get the repo: `git clone git://github.com/garbados/alewife.git && cd alewife`
 4. Install dependencies using node.js' package manager, [npm](https://npmjs.org/): `npm install`
-5. Deploy the docs to a CouchDB instance running at `http://localhost:5984`: `npm run-script deploy`
+5. Deploy the docs to a CouchDB instance running at `http://localhost:5984`: `npm start`
 
 Now your app is live! By default, the app is pushed to a local CouchDB instance and will live at <http://localhost:5984/docs/_design/alewife/_rewrite>, but that can be modified in `config/index.js`.
 
@@ -32,40 +32,15 @@ Alewife can scaffold documentation based on a sitemap constructed in `config/sit
 
 To scaffold documentation based on the sitemap:
 
-    npm run-script scaffold
+    npm run scaffold
 
-This will populate the `docs` directory with folders and files reflecting the sitemap. For example, a sitemap like this...
+This will populate the `docs` directory with folders and files reflecting the sitemap. For an example, take a look at `config.yaml`. Alewife converts the YAML to JSON, and uses that to scaffold your documentation.
 
-    [
-      'API Reference',
-      [
-        'Create a Database',
-        [
-          'CURL',
-          'Python',
-          'Ruby'
-        ]
-      ]
-    ]
-
-... will create a file hierarchy like this:
-
-    docs/
-      API Reference/
-        Create a Database/
-          index.md
-          CURL.md
-          Python.md
-          Ruby.md
-        index.md
-
-The first element of a section, when further elements are arrays, is considered the title section, reflected in the `index.md` for that directory. Further strings in the array are considered language examples, named `[language].md` in that section's directory.
-
-*That feels hard to explain, so it's probably a bad idea. Suggestions welcome.*
+The task `npm run scaffold` tries not to overwrite anything, so if you want to start from scratch, make sure to `npm run clean` first!
 
 Once you've scaffolded and populated your local docs and want to upload them, do this:
 
-    npm run-script sync
+    npm run upload
 
 This will push the sitemap and all your docs up to the `docs` database. 
 
@@ -74,6 +49,8 @@ The sitemap, on the server, looks like this:
     {
       _id: 'sitemap',
       _rev: '...',
+      languages: ['cURL', 'Node.js', ...],
+      methods: ['Create', 'Read', ...],
       sitemap: [ 'Welcome', [...]]
     }
 
@@ -85,11 +62,51 @@ Documentation looks like this:
       text: '# API Reference \nOur API is awesome, I promise.'
     }
 
-If you make more changes, just run `sync` again. It will overwrite server-side changes.
+If you make more changes, just run `upload` again. **It will overwrite documents already in the database.**
 
 ## Managing Docs w/ Porter
 
 You'll want to use the [docs branch of Porter](https://github.com/garbados/porter/tree/docs). **Instructions coming soon**, but the docs branch works as of this writing, so if you want to, just follow along with [Porter's install instructions](https://github.com/garbados/porter/tree/docs#install).
+
+## The App Itself
+
+The Alewife interface is under heavy development and probably currently sucks because CSS is a jerk and I don't understand it. So here's how it should work, where to find underlying code, etc.:
+
+### Commands
+
+How `npm run [command]` executes is detailed under the `scripts` key of `package.json`. Various tasks reside in the `tasks` folder, some are JS executables like `jshint`, and some are just commands like `grep`.
+
+Here's the major tasks and what they do:
+
+* `npm start`: converts `config.yaml` to `config.json`, copies assets to dist, and deploys the app.
+* `npm run scaffold`: uses `config.json` to scaffold a documentation architecture in `docs`.
+* `npm run upload`: uploads each file in `docs` to the CouchDB / Cloudant db specified in `couch.json`.
+* `npm test`: scaffolds, uploads, and then `npm start`. Used by Travis.
+* `npm run clean`: removes any files git isn't aware of, ex: everything in `docs`.
+
+### Language
+
+Alewife uses the search string to determine the current language. So for a query string like this...
+
+    ?Android
+
+The current language is `Android`. The current language defaults to the first listed language in `config.yaml`.
+
+### HTML
+
+All HTML lives in `assets/html/` and is copied into `dist/` during compilation. 
+
+REMEMBER, EDIT ASSETS, NOT DIST.
+
+### JS
+
+All JavaScript lives in `assets/js/` and is copied into `dist/js` during compilation. 
+
+REMEMBER, EDIT ASSETS, NOT DIST.
+
+### CSS
+
+Stylesheets are currently linked to via the BootstrapCDN. I leave styling as an exercise for the reader.
 
 ## Contributing
 
