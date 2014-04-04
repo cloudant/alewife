@@ -24,7 +24,7 @@ If you want to use Alewife to manage / present your docs:
 4. Install dependencies using node.js' package manager, [npm](https://npmjs.org/): `npm install`
 5. Deploy the docs to a CouchDB instance running at `http://localhost:5984`: `npm start`
 
-Now your app is live! By default, the app is pushed to a local CouchDB instance and will live at <http://localhost:5984/docs/_design/alewife/_rewrite>, but that can be modified in `config/index.js`.
+Now your app is live! By default, the app is pushed to a local CouchDB instance and will live at <http://localhost:5984/docs/_design/alewife/_rewrite>, but that can be modified in `couch.json`.
 
 ## Managing Docs Locally
 
