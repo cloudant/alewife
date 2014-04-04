@@ -4,3 +4,6 @@ services:
 node_js:
   - '0.8'
   - '0.10'
+
+before_script:
+  - curl -X PUT http://localhost:5984/docs
