@@ -23,7 +23,7 @@
     "start": "npm run yaml && npm run jshint && npm run copy && npm run deploy",
     "clean": "git clean -dxf",
     "todo": "grep -r TODO docs assets",
-    "test": "npm run scaffold && npm run upload && npm start"
+    "test": "npm run yaml && npm run scaffold && npm run upload && npm start"
   },
   "repository": {
     "type": "git",
