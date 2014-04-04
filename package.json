@@ -10,7 +10,8 @@
     "couchapp": "0.10.x",
     "dive": "~0.3.0",
     "browserify": "~3.32.1",
-    "js-yaml": "~3.0.2"
+    "js-yaml": "~3.0.2",
+    "jshint": "~2.5.0"
   },
   "scripts": {
     "yaml": "./node_modules/.bin/js-yaml config.yaml > config.json",
